@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 // Announcement Model
 const announcementSchema = new mongoose.Schema({
@@ -31,8 +31,7 @@ const auditLogSchema = new mongoose.Schema({
 
 auditLogSchema.index({ createdAt: 1 }, { expireAfterSeconds: 7776000 }); // 90 days TTL
 
-module.exports = {
-    Announcement: mongoose.model('Announcement', announcementSchema),
-    Notification: mongoose.model('Notification', notificationSchema),
-    AuditLog: mongoose.model('AuditLog', auditLogSchema)
-};
+export const Announcement = mongoose.model('Announcement', announcementSchema);
+export const Notification = mongoose.model('Notification', notificationSchema);
+export const AuditLog = mongoose.model('AuditLog', auditLogSchema);
+

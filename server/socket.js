@@ -1,17 +1,27 @@
-const { Server } = require("socket.io");
-const jwt = require("jsonwebtoken");
-const User = require("./models/User");
+import { Server } from "socket.io";
+import { createAdapter } from "@socket.io/redis-adapter";
+import jwt from "jsonwebtoken";
+import User from "./models/User.js";
+import { redisClient } from "./config/redis.js";
 
 let io;
 
-const initSocket = (server) => {
+export const initSocket = async (server) => {
+    const pubClient = redisClient;
+    const subClient = pubClient.duplicate();
+
+    await subClient.connect();
+
     io = new Server(server, {
+        adapter: createAdapter(pubClient, subClient),
         cors: {
-            origin: process.env.CORS_ORIGIN || "http://localhost:3000",
+            origin: process.env.CORS_ORIGIN || "http://localhost:5173",
             methods: ["GET", "POST"],
             credentials: true
         }
     });
+
+
 
     // Authentication Middleware for Sockets
     io.use(async (socket, next) => {
@@ -49,7 +59,7 @@ const initSocket = (server) => {
     return io;
 };
 
-const getIO = () => {
+export const getIO = () => {
     if (!io) {
         throw new Error("Socket.io not initialized!");
     }
@@ -57,13 +67,12 @@ const getIO = () => {
 };
 
 // Utility to emit to specific user
-const emitToUser = (userId, event, data) => {
+export const emitToUser = (userId, event, data) => {
     io.to(`user:${userId}`).emit(event, data);
 };
 
 // Utility to emit to class
-const emitToClass = (classId, event, data) => {
+export const emitToClass = (classId, event, data) => {
     io.to(`class:${classId}`).emit(event, data);
 };
 
-module.exports = { initSocket, getIO, emitToUser, emitToClass };

@@ -1,10 +1,10 @@
-const User = require('../models/User');
-const jwt = require('jsonwebtoken');
+import User from '../models/User.js';
+import jwt from 'jsonwebtoken';
 
 // @desc    Login user
 // @route   POST /api/auth/login
 // @access  Public
-exports.login = async (req, res, next) => {
+export const login = async (req, res, next) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -27,7 +27,7 @@ exports.login = async (req, res, next) => {
 // @desc    Log user out / clear cookie
 // @route   GET /api/auth/logout
 // @access  Private
-exports.logout = async (req, res, next) => {
+export const logout = async (req, res, next) => {
     res.cookie('token', 'none', {
         expires: new Date(Date.now() + 10 * 1000),
         httpOnly: true,
@@ -39,8 +39,11 @@ exports.logout = async (req, res, next) => {
 // @desc    Get current logged in user
 // @route   GET /api/auth/me
 // @access  Private
-exports.getMe = async (req, res, next) => {
-    res.status(200).json({ success: true, data: req.user });
+export const getMe = async (req, res, next) => {
+    res.status(200).json({
+        success: true,
+        user: req.user
+    });
 };
 
 // Helper: Get token from model, create cookie and send response
@@ -73,3 +76,4 @@ const sendTokenResponse = (user, statusCode, res) => {
             }
         });
 };
+

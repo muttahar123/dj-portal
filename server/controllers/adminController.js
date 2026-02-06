@@ -1,10 +1,10 @@
-const User = require('../models/User');
-const Class = require('../models/Class');
+import User from '../models/User.js';
+import Class from '../models/Class.js';
 
 // @desc    Create a new user
 // @route   POST /api/admin/users
 // @access  Private/Admin
-exports.createUser = async (req, res, next) => {
+export const createUser = async (req, res, next) => {
     try {
         const { name, email, password, role, department, studentId, teacherId } = req.body;
 
@@ -27,7 +27,7 @@ exports.createUser = async (req, res, next) => {
 // @desc    Update user details
 // @route   PUT /api/admin/users/:id
 // @access  Private/Admin
-exports.updateUser = async (req, res, next) => {
+export const updateUser = async (req, res, next) => {
     try {
         const user = await User.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
@@ -47,7 +47,7 @@ exports.updateUser = async (req, res, next) => {
 // @desc    Create a new class
 // @route   POST /api/admin/classes
 // @access  Private/Admin
-exports.createClass = async (req, res, next) => {
+export const createClass = async (req, res, next) => {
     try {
         const { name, code, teacher, students, schedule } = req.body;
 
@@ -79,10 +79,21 @@ exports.createClass = async (req, res, next) => {
 // @desc    Get all users (with filters)
 // @route   GET /api/admin/users
 // @access  Private/Admin
-exports.getAllUsers = async (req, res, next) => {
+export const getAllUsers = async (req, res, next) => {
     try {
         const users = await User.find(req.query);
         res.status(200).json({ success: true, count: users.length, data: users });
+    } catch (err) {
+        next(err);
+    }
+};
+
+export const getAllClasses = async (req, res, next) => {
+    try {
+        const classes = await Class.find()
+            .populate('teacher', 'name email department')
+            .populate('students', 'name email');
+        res.status(200).json({ success: true, count: classes.length, data: classes });
     } catch (err) {
         next(err);
     }

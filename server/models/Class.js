@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const classSchema = new mongoose.Schema({
     name: {
@@ -37,9 +37,8 @@ const classSchema = new mongoose.Schema({
 });
 
 // Soft delete middleware
-classSchema.pre(/^find/, function (next) {
+classSchema.pre(/^find/, function () {
     this.where({ isDeleted: false });
-    next();
 });
 
-module.exports = mongoose.model('Class', classSchema);
+export default mongoose.model('Class', classSchema);

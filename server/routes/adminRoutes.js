@@ -1,6 +1,6 @@
-const express = require('express');
-const { createUser, updateUser, createClass, getAllUsers } = require('../controllers/adminController');
-const { protect, authorize } = require('../middleware/auth');
+import express from 'express';
+import { createUser, updateUser, createClass, getAllUsers, getAllClasses } from '../controllers/adminController.js';
+import { protect, authorize } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -15,6 +15,8 @@ router.route('/users/:id')
     .put(updateUser);
 
 router.route('/classes')
+    .get(getAllClasses)
     .post(createClass);
 
-module.exports = router;
+export default router;
+

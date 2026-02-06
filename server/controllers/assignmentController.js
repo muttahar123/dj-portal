@@ -1,11 +1,11 @@
-const Assignment = require('../models/Assignment');
-const AssignmentSubmission = require('../models/AssignmentSubmission');
-const Class = require('../models/Class');
+import Assignment from '../models/Assignment.js';
+import AssignmentSubmission from '../models/AssignmentSubmission.js';
+import Class from '../models/Class.js';
 
 // @desc    Create a new assignment
 // @route   POST /api/assignments
 // @access  Private/Teacher
-exports.createAssignment = async (req, res, next) => {
+export const createAssignment = async (req, res, next) => {
     try {
         const { title, description, classId, dueDate, points } = req.body;
 
@@ -33,7 +33,7 @@ exports.createAssignment = async (req, res, next) => {
 // @desc    Submit an assignment
 // @route   POST /api/assignments/:id/submit
 // @access  Private/Student
-exports.submitAssignment = async (req, res, next) => {
+export const submitAssignment = async (req, res, next) => {
     try {
         const { fileUrl } = req.body; // In practice, file would be uploaded via multer first
 
@@ -62,7 +62,7 @@ exports.submitAssignment = async (req, res, next) => {
 // @desc    Grade a submission
 // @route   PUT /api/assignments/grade/:submissionId
 // @access  Private/Teacher
-exports.gradeSubmission = async (req, res, next) => {
+export const gradeSubmission = async (req, res, next) => {
     try {
         const { grade, feedback } = req.body;
 
@@ -85,6 +85,53 @@ exports.gradeSubmission = async (req, res, next) => {
         await submission.save();
 
         res.status(200).json({ success: true, data: submission });
+    } catch (err) {
+        next(err);
+    }
+};
+
+// @desc    Get all assignments
+// @route   GET /api/assignments
+// @access  Private
+export const getAssignments = async (req, res, next) => {
+    try {
+        let query = {};
+
+        // If teacher, only show their assignments
+        if (req.user.role === 'TEACHER') {
+            query.teacher = req.user.id;
+        }
+
+        const assignments = await Assignment.find(query)
+            .populate('class', 'name code')
+            .populate('teacher', 'name')
+            .sort('-createdAt');
+
+        res.status(200).json({ success: true, count: assignments.length, data: assignments });
+    } catch (err) {
+        next(err);
+    }
+};
+// @desc    Get submissions for a specific assignment
+// @route   GET /api/assignments/:id/submissions
+// @access  Private/Teacher
+export const getSubmissionsByAssignment = async (req, res, next) => {
+    try {
+        const assignment = await Assignment.findById(req.params.id);
+        if (!assignment) {
+            return res.status(404).json({ message: 'Assignment not found' });
+        }
+
+        // Verify teacher owns the assignment
+        if (assignment.teacher.toString() !== req.user.id && req.user.role !== 'ADMIN') {
+            return res.status(401).json({ message: 'Not authorized to view these submissions' });
+        }
+
+        const submissions = await AssignmentSubmission.find({ assignment: req.params.id })
+            .populate('student', 'name email studentId')
+            .sort('-createdAt');
+
+        res.status(200).json({ success: true, count: submissions.length, data: submissions });
     } catch (err) {
         next(err);
     }

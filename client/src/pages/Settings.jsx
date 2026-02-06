@@ -1,0 +1,110 @@
+import React, { useState } from 'react';
+import { Settings as SettingsIcon, User, Lock, Bell, Shield, LogOut } from 'lucide-react';
+import useAuthStore from '../store/useAuthStore';
+import { toast } from 'react-toastify';
+
+const Settings = () => {
+    const { user, logout } = useAuthStore();
+    const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+    const handleLogout = async () => {
+        setIsLoggingOut(true);
+        try {
+            await logout();
+            toast.info('Logged out successfully');
+        } catch (error) {
+            toast.error('Failed to logout');
+            setIsLoggingOut(false);
+        }
+    };
+
+    return (
+        <div className="max-w-4xl mx-auto space-y-8">
+            <div>
+                <h1 className="text-3xl font-bold text-white flex items-center gap-3">
+                    <SettingsIcon className="w-8 h-8 text-slate-500" />
+                    Account Settings
+                </h1>
+                <p className="text-slate-400 mt-2">Manage your institutional profile, security and preferences.</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {/* Sidebar Navigation for Settings */}
+                <div className="space-y-2">
+                    <button className="w-full flex items-center gap-3 px-4 py-3 bg-blue-600 text-white rounded-2xl shadow-lg shadow-blue-600/20 font-bold transition-all">
+                        <User className="w-5 h-5" />
+                        My Profile
+                    </button>
+                    <button className="w-full flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-slate-800/50 hover:text-white rounded-2xl font-bold transition-all">
+                        <Lock className="w-5 h-5" />
+                        Security
+                    </button>
+                    <button className="w-full flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-slate-800/50 hover:text-white rounded-2xl font-bold transition-all">
+                        <Bell className="w-5 h-5" />
+                        Notifications
+                    </button>
+                </div>
+
+                {/* Main Settings Panel */}
+                <div className="md:col-span-2 space-y-6">
+                    <div className="bg-slate-900/40 border border-slate-800 rounded-3xl p-8 shadow-2xl backdrop-blur-md">
+                        <h2 className="text-xl font-bold mb-8 flex items-center gap-2">
+                            <Shield className="w-5 h-5 text-blue-500" />
+                            Personal Information
+                        </h2>
+
+                        <div className="space-y-6">
+                            <div className="flex flex-col gap-2">
+                                <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest pl-1">Full Identity</label>
+                                <div className="bg-slate-950/50 border border-slate-800 px-5 py-4 rounded-2xl text-slate-200 font-medium">
+                                    {user?.name}
+                                </div>
+                            </div>
+
+                            <div className="flex flex-col gap-2">
+                                <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest pl-1">Academic Email</label>
+                                <div className="bg-slate-950/50 border border-slate-800 px-5 py-4 rounded-2xl text-slate-200 font-medium">
+                                    {user?.email}
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="flex flex-col gap-2">
+                                    <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest pl-1">Portal Role</label>
+                                    <div className="bg-slate-950/50 border border-slate-800 px-5 py-4 rounded-2xl text-blue-400 font-bold text-sm uppercase tracking-tighter">
+                                        {user?.role}
+                                    </div>
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest pl-1">Department</label>
+                                    <div className="bg-slate-950/50 border border-slate-800 px-5 py-4 rounded-2xl text-slate-200 font-medium text-sm">
+                                        {user?.department}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="mt-12 pt-8 border-t border-slate-800/50">
+                            <button
+                                onClick={handleLogout}
+                                disabled={isLoggingOut}
+                                className="flex items-center gap-2 text-red-500 font-bold hover:bg-red-500/10 px-6 py-3 rounded-2xl transition-all border border-transparent hover:border-red-500/20"
+                            >
+                                {isLoggingOut ? (
+                                    <div className="w-4 h-4 border-2 border-red-500/20 border-t-red-500 rounded-full animate-spin" />
+                                ) : (
+                                    <>
+                                        <LogOut className="w-5 h-5" />
+                                        Sign Out from Portal
+                                    </>
+                                )}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default Settings;

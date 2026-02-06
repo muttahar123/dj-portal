@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const attendanceSchema = new mongoose.Schema({
     class: {
@@ -35,4 +35,5 @@ attendanceSchema.index({ class: 1, date: 1 });
 // Index for student-specific attendance tracking
 attendanceSchema.index({ student: 1, date: 1 });
 
-module.exports = mongoose.model('Attendance', attendanceSchema);
+export default mongoose.model('Attendance', attendanceSchema);
+

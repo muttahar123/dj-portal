@@ -1,10 +1,33 @@
 import { create } from 'zustand';
 import api from '../services/api';
 
+const getStoredUser = () => {
+    const user = localStorage.getItem('user');
+    if (!user || user === 'undefined') return null;
+    try {
+        return JSON.parse(user);
+    } catch (e) {
+        return null;
+    }
+};
+
 const useAuthStore = create((set) => ({
-    user: JSON.parse(localStorage.getItem('user')) || null,
-    isAuthenticated: !!localStorage.getItem('user'),
+    user: getStoredUser(),
+    isAuthenticated: !!getStoredUser(),
     loading: false,
+    isInitialLoad: true,
+
+    checkAuth: async () => {
+        try {
+            const res = await api.get('/auth/me');
+            const user = res.data.user;
+            localStorage.setItem('user', JSON.stringify(user));
+            set({ user, isAuthenticated: true, isInitialLoad: false });
+        } catch (error) {
+            localStorage.removeItem('user');
+            set({ user: null, isAuthenticated: false, isInitialLoad: false });
+        }
+    },
 
     login: async (email, password) => {
         set({ loading: true });

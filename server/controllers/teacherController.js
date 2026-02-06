@@ -1,11 +1,11 @@
-const User = require('../models/User');
-const Class = require('../models/Class');
-const Attendance = require('../models/Attendance');
+import User from '../models/User.js';
+import Class from '../models/Class.js';
+import Attendance from '../models/Attendance.js';
 
 // @desc    Get classes assigned to teacher
 // @route   GET /api/teacher/classes
 // @access  Private/Teacher
-exports.getAssignedClasses = async (req, res, next) => {
+export const getAssignedClasses = async (req, res, next) => {
     try {
         const classes = await Class.find({ teacher: req.user.id });
         res.status(200).json({ success: true, count: classes.length, data: classes });
@@ -17,7 +17,7 @@ exports.getAssignedClasses = async (req, res, next) => {
 // @desc    Get students in a specific class
 // @route   GET /api/teacher/classes/:classId/students
 // @access  Private/Teacher
-exports.getClassStudents = async (req, res, next) => {
+export const getClassStudents = async (req, res, next) => {
     try {
         const studentClass = await Class.findById(req.params.classId).populate('students', 'name email studentId department');
 
@@ -34,7 +34,7 @@ exports.getClassStudents = async (req, res, next) => {
 // @desc    Mark attendance for a class
 // @route   POST /api/teacher/attendance
 // @access  Private/Teacher
-exports.markAttendance = async (req, res, next) => {
+export const markAttendance = async (req, res, next) => {
     const { classId, date, records } = req.body; // records: [{ studentId: "...", status: "P/A/L" }]
 
     if (!classId || !date || !records) {
@@ -80,3 +80,4 @@ exports.markAttendance = async (req, res, next) => {
         next(err);
     }
 };
+

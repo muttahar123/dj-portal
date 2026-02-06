@@ -1,6 +1,6 @@
-const express = require('express');
-const { getAssignedClasses, getClassStudents, markAttendance } = require('../controllers/teacherController');
-const { protect, authorize } = require('../middleware/auth');
+import express from 'express';
+import { getAssignedClasses, getClassStudents, markAttendance } from '../controllers/teacherController.js';
+import { protect, authorize } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -11,4 +11,5 @@ router.get('/classes', getAssignedClasses);
 router.get('/classes/:classId/students', getClassStudents);
 router.post('/attendance', markAttendance);
 
-module.exports = router;
+export default router;
+

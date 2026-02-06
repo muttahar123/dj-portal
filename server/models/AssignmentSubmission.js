@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const submissionSchema = new mongoose.Schema({
     assignment: {
@@ -36,4 +36,5 @@ const submissionSchema = new mongoose.Schema({
 // Ensure a student can only submit once per assignment
 submissionSchema.index({ assignment: 1, student: 1 }, { unique: true });
 
-module.exports = mongoose.model('AssignmentSubmission', submissionSchema);
+export default mongoose.model('AssignmentSubmission', submissionSchema);
+

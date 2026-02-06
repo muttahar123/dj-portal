@@ -1,37 +1,57 @@
-require('dotenv').config();
-const express = require('express');
-const http = require('http');
-const cors = require('cors');
-const helmet = require('helmet');
-const cookieParser = require('cookie-parser');
-const morgan = require('morgan');
-const mongoSanitize = require('express-mongo-sanitize');
-const rateLimit = require('express-rate-limit');
-const connectDB = require('./config/db');
+import 'dotenv/config';
+import setupDNS from './utils/dns.js';
+
+// Setup DNS for development
+setupDNS();
+
+import express from 'express';
+import http from 'http';
+import cors from 'cors';
+import helmet from 'helmet';
+import cookieParser from 'cookie-parser';
+import morgan from 'morgan';
+import mongoSanitize from 'express-mongo-sanitize';
+import { rateLimit } from 'express-rate-limit';
+import connectDB from './config/db.js';
+import { connectRedis } from './config/redis.js';
 
 // Route files
-const auth = require('./routes/authRoutes');
-const teacher = require('./routes/teacherRoutes');
-const student = require('./routes/studentRoutes');
-const admin = require('./routes/adminRoutes');
-const assignments = require('./routes/assignmentRoutes');
-const { initSocket } = require('./socket');
+import auth from './routes/authRoutes.js';
+import teacher from './routes/teacherRoutes.js';
+import student from './routes/studentRoutes.js';
+import admin from './routes/adminRoutes.js';
+import assignments from './routes/assignmentRoutes.js';
+import { initSocket } from './socket.js';
 
 // Initialize Express
 const app = express();
 const server = http.createServer(app);
 
-// Connect to Database
+// Connect to Databases
 connectDB();
+connectRedis();
 
 // Initialize Socket.io
-initSocket(server);
+await initSocket(server);
 
 // Middleware
 app.use(helmet()); // Security headers
 app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true })); // CORS
 app.use(express.json()); // Body parser
 app.use(cookieParser()); // Cookie parser
+
+// Express 5 req.query compatibility fix for express-mongo-sanitize
+app.use((req, res, next) => {
+    const query = { ...req.query };
+    Object.defineProperty(req, 'query', {
+        value: query,
+        writable: true,
+        enumerable: true,
+        configurable: true
+    });
+    next();
+});
+
 app.use(mongoSanitize()); // Prevent NoSQL Injection
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev')); // Logging
@@ -76,3 +96,4 @@ const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
     console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
 });
+
