@@ -42,6 +42,12 @@ export const submitAssignment = async (req, res, next) => {
             return res.status(404).json({ message: 'Assignment not found' });
         }
 
+        // Verify student is enrolled in the class
+        const isEnrolled = req.user.classes.some(classId => classId.toString() === assignment.class.toString());
+        if (!isEnrolled) {
+            return res.status(403).json({ message: 'Not authorized to submit to this assignment' });
+        }
+
         // Check if deadline passed
         if (new Date() > new Date(assignment.dueDate)) {
             // Logic for late submission could go here
@@ -100,6 +106,8 @@ export const getAssignments = async (req, res, next) => {
         // If teacher, only show their assignments
         if (req.user.role === 'TEACHER') {
             query.teacher = req.user.id;
+        } else if (req.user.role === 'STUDENT') {
+            query.class = { $in: req.user.classes };
         }
 
         const assignments = await Assignment.find(query)
