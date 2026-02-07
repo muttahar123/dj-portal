@@ -89,7 +89,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                         <div className="flex items-center gap-3 mb-2">
                             <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center">
                                 {/* <GraduationCap className="text-white w-6 h-6" /> */}
-                                <img src="dj-science-college-logo.png" alt="DJ Science College Logo" className="w-full h-full object-contain" />
+                                <img src="/dj-science-college-logo.png" alt="DJ Science College Logo" className="w-full h-full object-contain" />
                             </div>
                             <h2 className="text-xl font-bold text-white">
                                 DJ SCIENCE
