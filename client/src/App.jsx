@@ -18,6 +18,7 @@ import StudentAssignments from './pages/Student/StudentAssignments';
 import StudentSchedule from './pages/Student/StudentSchedule';
 import Settings from './pages/Settings';
 import Announcements from './pages/Admin/Announcements';
+import AnnouncementsFeed from './pages/AnnouncementsFeed';
 import Profile from './pages/Profile';
 
 
@@ -49,6 +50,14 @@ const DashboardDispatcher = () => {
   if (user?.role === 'ADMIN') return <AdminDashboard />;
   if (user?.role === 'TEACHER') return <TeacherDashboard />;
   return <StudentDashboard />;
+};
+
+// Dispatcher for announcements - Admin gets full CRUD, others get read-only
+const AnnouncementsDispatcher = () => {
+  const { user } = useAuthStore();
+
+  if (user?.role === 'ADMIN') return <Announcements />;
+  return <AnnouncementsFeed />;
 };
 
 function App() {
@@ -95,8 +104,8 @@ function App() {
             } />
 
             <Route path="announcements" element={
-              <ProtectedRoute allowedRoles={['ADMIN']}>
-                <Announcements />
+              <ProtectedRoute>
+                <AnnouncementsDispatcher />
               </ProtectedRoute>
             } />
 

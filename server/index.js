@@ -21,6 +21,7 @@ import student from './routes/studentRoutes.js';
 import admin from './routes/adminRoutes.js';
 import assignments from './routes/assignmentRoutes.js';
 import announcements from './routes/announcementRoutes.js';
+import notifications from './routes/notificationRoutes.js';
 import { initSocket } from './socket.js';
 
 // Initialize Express
@@ -76,6 +77,7 @@ app.use('/api/student', student);
 app.use('/api/admin', admin);
 app.use('/api/assignments', assignments);
 app.use('/api/announcements', announcements);
+app.use('/api/notifications', notifications);
 
 // Health Check
 app.get('/api/health', (req, res) => {

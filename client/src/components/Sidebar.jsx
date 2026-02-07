@@ -54,12 +54,14 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             { to: '/dashboard/classes', icon: BookOpen, label: 'My Classes' },
             { to: '/dashboard/attendance', icon: ClipboardCheck, label: 'Attendance' },
             { to: '/dashboard/assignments', icon: FileText, label: 'Assignments' },
+            { to: '/dashboard/announcements', icon: Megaphone, label: 'Announcements' },
         ],
         STUDENT: [
             { to: '/dashboard', icon: LayoutDashboard, label: 'My Portal', end: true },
             { to: '/dashboard/student/attendance', icon: ClipboardCheck, label: 'Attendance' },
             { to: '/dashboard/student/assignments', icon: FileText, label: 'Assignments' },
             { to: '/dashboard/schedule', icon: Calendar, label: 'Schedule' },
+            { to: '/dashboard/announcements', icon: Megaphone, label: 'Announcements' },
         ]
     };
 
