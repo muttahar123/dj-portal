@@ -29,12 +29,14 @@ const userSchema = new mongoose.Schema({
     studentId: {
         type: String,
         unique: true,
-        sparse: true // Only unique if present
+        sparse: true,
+        set: v => v === '' ? undefined : v
     },
     teacherId: {
         type: String,
         unique: true,
-        sparse: true
+        sparse: true,
+        set: v => v === '' ? undefined : v
     },
     profileImage: {
         type: String,
