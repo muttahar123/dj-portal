@@ -9,7 +9,9 @@ import {
     Settings,
     GraduationCap,
     Calendar,
-    X
+    X,
+    Megaphone,
+    UserCircle
 } from 'lucide-react';
 import useAuthStore from '../store/useAuthStore';
 
@@ -44,6 +46,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             { to: '/dashboard', icon: LayoutDashboard, label: 'Overview', end: true },
             { to: '/dashboard/users', icon: Users, label: 'User Management' },
             { to: '/dashboard/classes', icon: BookOpen, label: 'Class Management' },
+            { to: '/dashboard/announcements', icon: Megaphone, label: 'Announcements' },
             { to: '/dashboard/audit', icon: FileText, label: 'Audit Logs' },
         ],
         TEACHER: [
@@ -105,6 +108,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                     </div>
 
                     <div className="mt-auto pt-6 border-t border-slate-800 space-y-1">
+                        <SidebarLink to="/dashboard/profile" icon={UserCircle} label="Profile" />
                         <SidebarLink to="/dashboard/settings" icon={Settings} label="Settings" />
                     </div>
                 </div>

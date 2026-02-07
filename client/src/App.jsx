@@ -17,6 +17,8 @@ import StudentAttendance from './pages/Student/StudentAttendance';
 import StudentAssignments from './pages/Student/StudentAssignments';
 import StudentSchedule from './pages/Student/StudentSchedule';
 import Settings from './pages/Settings';
+import Announcements from './pages/Admin/Announcements';
+import Profile from './pages/Profile';
 
 
 // Protected Route Component
@@ -92,6 +94,12 @@ function App() {
               </ProtectedRoute>
             } />
 
+            <Route path="announcements" element={
+              <ProtectedRoute allowedRoles={['ADMIN']}>
+                <Announcements />
+              </ProtectedRoute>
+            } />
+
             {/* Teacher Specific */}
             <Route path="attendance" element={
               <ProtectedRoute allowedRoles={['TEACHER']}>
@@ -127,6 +135,12 @@ function App() {
             <Route path="settings" element={
               <ProtectedRoute>
                 <Settings />
+              </ProtectedRoute>
+            } />
+
+            <Route path="profile" element={
+              <ProtectedRoute>
+                <Profile />
               </ProtectedRoute>
             } />
           </Route>

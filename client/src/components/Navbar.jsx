@@ -1,10 +1,20 @@
 import React from 'react';
-import { Bell, LogOut, User as UserIcon, Menu } from 'lucide-react';
+import { LogOut, User as UserIcon, Menu } from 'lucide-react';
 import useAuthStore from '../store/useAuthStore';
 import { motion } from 'framer-motion';
+import NotificationBell from './NotificationBell';
 
 const Navbar = ({ toggleSidebar }) => {
     const { user, logout } = useAuthStore();
+
+    // Get token from cookie or localStorage for socket auth
+    const getToken = () => {
+        // Try to get from localStorage if stored there
+        const storedUser = localStorage.getItem('user');
+        // The actual JWT token needs to be obtained; for now we'll use a workaround
+        // In a production app, the token would be stored separately
+        return document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1] || '';
+    };
 
     return (
         <nav className="sticky top-0 z-40 w-full bg-slate-900/50 backdrop-blur-xl border-b border-slate-800">
@@ -24,10 +34,7 @@ const Navbar = ({ toggleSidebar }) => {
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <button className="relative p-2 hover:bg-slate-800 rounded-full text-slate-400 transition-colors">
-                        <Bell className="w-5 h-5" />
-                        <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-slate-900"></span>
-                    </button>
+                    <NotificationBell token={getToken()} />
 
                     <div className="h-6 w-px bg-slate-800"></div>
 
@@ -54,3 +61,4 @@ const Navbar = ({ toggleSidebar }) => {
 };
 
 export default Navbar;
+

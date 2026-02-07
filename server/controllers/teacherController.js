@@ -81,3 +81,57 @@ export const markAttendance = async (req, res, next) => {
     }
 };
 
+// @desc    Update an existing attendance record
+// @route   PUT /api/teacher/attendance/:id
+// @access  Private/Teacher
+export const updateAttendance = async (req, res, next) => {
+    const { status } = req.body;
+
+    if (!status || !['P', 'A', 'L'].includes(status)) {
+        return res.status(400).json({ message: 'Please provide a valid status (P, A, or L)' });
+    }
+
+    try {
+        const attendance = await Attendance.findById(req.params.id).populate('class');
+
+        if (!attendance) {
+            return res.status(404).json({ message: 'Attendance record not found' });
+        }
+
+        // Verify class belongs to the requesting teacher
+        if (attendance.class.teacher.toString() !== req.user.id) {
+            return res.status(401).json({ message: 'Not authorized to update this attendance record' });
+        }
+
+        attendance.status = status;
+        await attendance.save();
+
+        res.status(200).json({ success: true, data: attendance });
+    } catch (err) {
+        next(err);
+    }
+};
+
+// @desc    Get attendance for a class on a specific date
+// @route   GET /api/teacher/attendance/:classId/:date
+// @access  Private/Teacher
+export const getAttendanceByDate = async (req, res, next) => {
+    try {
+        const { classId, date } = req.params;
+
+        const startOfDay = new Date(date);
+        startOfDay.setHours(0, 0, 0, 0);
+        const endOfDay = new Date(date);
+        endOfDay.setHours(23, 59, 59, 999);
+
+        const attendance = await Attendance.find({
+            class: classId,
+            date: { $gte: startOfDay, $lte: endOfDay }
+        }).populate('student', 'name email studentId');
+
+        res.status(200).json({ success: true, count: attendance.length, data: attendance });
+    } catch (err) {
+        next(err);
+    }
+};
+

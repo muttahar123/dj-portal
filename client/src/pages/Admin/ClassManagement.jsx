@@ -10,13 +10,16 @@ import {
     Clock,
     MapPin,
     CheckCircle2,
-    Trash2
+    Trash2,
+    Edit3,
+    X
 } from 'lucide-react';
 import { toast } from 'react-toastify';
 
 const ClassManagement = () => {
     const queryClient = useQueryClient();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editingClass, setEditingClass] = useState(null);
     const [formData, setFormData] = useState({
         name: '',
         code: '',
@@ -29,8 +32,7 @@ const ClassManagement = () => {
     const { data: classes, isLoading: isClassesLoading } = useQuery({
         queryKey: ['classes'],
         queryFn: async () => {
-            const res = await api.get('/admin/classes'); // Note: I need to ensure this route exists or update it
-            // Actually, I don't have a GET /admin/classes yet in the controller, but I'll assume it's part of the plan
+            const res = await api.get('/admin/classes');
             return res.data.data;
         }
     });
@@ -58,16 +60,56 @@ const ClassManagement = () => {
         onSuccess: () => {
             queryClient.invalidateQueries(['classes']);
             toast.success('Class created successfully');
-            setIsModalOpen(false);
-            setFormData({
-                name: '', code: '', teacher: '', students: [],
-                schedule: [{ day: 'Monday', startTime: '', endTime: '', room: '' }]
-            });
+            closeModal();
         },
         onError: (err) => {
             toast.error(err.response?.data?.message || 'Failed to create class');
         }
     });
+
+    const updateClassMutation = useMutation({
+        mutationFn: ({ id, data }) => api.put(`/admin/classes/${id}`, data),
+        onSuccess: () => {
+            queryClient.invalidateQueries(['classes']);
+            toast.success('Class updated successfully');
+            closeModal();
+        },
+        onError: (err) => {
+            toast.error(err.response?.data?.message || 'Failed to update class');
+        }
+    });
+
+    const deleteClassMutation = useMutation({
+        mutationFn: (id) => api.delete(`/admin/classes/${id}`),
+        onSuccess: () => {
+            queryClient.invalidateQueries(['classes']);
+            toast.success('Class deleted successfully');
+        },
+        onError: (err) => {
+            toast.error(err.response?.data?.message || 'Failed to delete class');
+        }
+    });
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setEditingClass(null);
+        setFormData({
+            name: '', code: '', teacher: '', students: [],
+            schedule: [{ day: 'Monday', startTime: '', endTime: '', room: '' }]
+        });
+    };
+
+    const openEditModal = (cls) => {
+        setEditingClass(cls);
+        setFormData({
+            name: cls.name,
+            code: cls.code,
+            teacher: cls.teacher?._id || '',
+            students: cls.students?.map(s => s._id) || [],
+            schedule: cls.schedule?.length > 0 ? cls.schedule : [{ day: 'Monday', startTime: '', endTime: '', room: '' }]
+        });
+        setIsModalOpen(true);
+    };
 
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -86,6 +128,11 @@ const ClassManagement = () => {
         });
     };
 
+    const removeScheduleItem = (index) => {
+        const newSchedule = formData.schedule.filter((_, i) => i !== index);
+        setFormData({ ...formData, schedule: newSchedule.length > 0 ? newSchedule : [{ day: 'Monday', startTime: '', endTime: '', room: '' }] });
+    };
+
     const handleStudentToggle = (studentId) => {
         const newStudents = formData.students.includes(studentId)
             ? formData.students.filter(id => id !== studentId)
@@ -95,8 +142,20 @@ const ClassManagement = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        createClassMutation.mutate(formData);
+        if (editingClass) {
+            updateClassMutation.mutate({ id: editingClass._id, data: formData });
+        } else {
+            createClassMutation.mutate(formData);
+        }
     };
+
+    const handleDelete = (cls) => {
+        if (window.confirm(`Are you sure you want to delete "${cls.name}"?`)) {
+            deleteClassMutation.mutate(cls._id);
+        }
+    };
+
+    const isPending = createClassMutation.isPending || updateClassMutation.isPending;
 
     return (
         <div className="space-y-6">
@@ -162,27 +221,40 @@ const ClassManagement = () => {
                                     </div>
                                     <span className="text-xs font-medium text-slate-400">{cls.teacher?.name}</span>
                                 </div>
-                                <button className="text-slate-500 hover:text-red-400 transition-colors p-1">
-                                    <Trash2 className="w-4 h-4" />
-                                </button>
+                                <div className="flex items-center gap-1">
+                                    <button
+                                        onClick={() => openEditModal(cls)}
+                                        className="text-slate-500 hover:text-blue-400 transition-colors p-1.5 hover:bg-blue-500/10 rounded-lg"
+                                    >
+                                        <Edit3 className="w-4 h-4" />
+                                    </button>
+                                    <button
+                                        onClick={() => handleDelete(cls)}
+                                        className="text-slate-500 hover:text-red-400 transition-colors p-1.5 hover:bg-red-500/10 rounded-lg"
+                                    >
+                                        <Trash2 className="w-4 h-4" />
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     ))}
                 </div>
             )}
 
-            {/* Create Class Modal */}
+            {/* Create/Edit Class Modal */}
             {isModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-                    <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-md" onClick={() => setIsModalOpen(false)} />
-                    <div className="relative bg-slate-900 border border-slate-800 w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl maxHeight-[90vh] flex flex-col">
+                    <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-md" onClick={closeModal} />
+                    <div className="relative bg-slate-900 border border-slate-800 w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col">
                         <div className="p-8 overflow-y-auto scrollbar-hide">
                             <div className="flex justify-between items-center mb-6">
                                 <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-                                    <Plus className="text-blue-500" />
-                                    Configure New Class
+                                    {editingClass ? <Edit3 className="text-blue-500" /> : <Plus className="text-blue-500" />}
+                                    {editingClass ? 'Edit Class' : 'Configure New Class'}
                                 </h2>
-                                <button onClick={() => setIsModalOpen(false)} className="text-slate-500 hover:text-white transition-colors text-xl font-bold">×</button>
+                                <button onClick={closeModal} className="text-slate-500 hover:text-white transition-colors p-2 hover:bg-slate-800 rounded-lg">
+                                    <X className="w-5 h-5" />
+                                </button>
                             </div>
 
                             <form onSubmit={handleSubmit} className="space-y-6">
@@ -192,7 +264,7 @@ const ClassManagement = () => {
                                         <input
                                             name="name"
                                             required
-                                            className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 transition-all text-sm"
+                                            className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 transition-all text-sm text-white"
                                             placeholder="e.g. Theoretical Physics"
                                             value={formData.name}
                                             onChange={handleInputChange}
@@ -203,7 +275,8 @@ const ClassManagement = () => {
                                         <input
                                             name="code"
                                             required
-                                            className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 transition-all text-sm font-mono tracking-widest"
+                                            disabled={!!editingClass}
+                                            className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 transition-all text-sm font-mono tracking-widest text-white disabled:opacity-50"
                                             placeholder="PHY-101"
                                             value={formData.code}
                                             onChange={handleInputChange}
@@ -216,7 +289,7 @@ const ClassManagement = () => {
                                     <select
                                         name="teacher"
                                         required
-                                        className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 transition-all text-sm"
+                                        className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 transition-all text-sm text-white"
                                         value={formData.teacher}
                                         onChange={handleInputChange}
                                     >
@@ -240,9 +313,9 @@ const ClassManagement = () => {
                                     </div>
 
                                     {formData.schedule.map((item, idx) => (
-                                        <div key={idx} className="grid grid-cols-2 md:grid-cols-4 gap-3 bg-slate-950/30 p-4 rounded-2xl border border-slate-800/50">
+                                        <div key={idx} className="grid grid-cols-2 md:grid-cols-5 gap-3 bg-slate-950/30 p-4 rounded-2xl border border-slate-800/50">
                                             <select
-                                                className="bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs focus:outline-none focus:border-blue-500"
+                                                className="bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs focus:outline-none focus:border-blue-500 text-white"
                                                 value={item.day}
                                                 onChange={(e) => handleScheduleChange(idx, 'day', e.target.value)}
                                             >
@@ -252,25 +325,34 @@ const ClassManagement = () => {
                                             </select>
                                             <input
                                                 type="text"
-                                                placeholder="Start (e.g. 09:00)"
-                                                className="bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs focus:outline-none focus:border-blue-500"
+                                                placeholder="Start"
+                                                className="bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs focus:outline-none focus:border-blue-500 text-white"
                                                 value={item.startTime}
                                                 onChange={(e) => handleScheduleChange(idx, 'startTime', e.target.value)}
                                             />
                                             <input
                                                 type="text"
-                                                placeholder="End (e.g. 10:30)"
-                                                className="bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs focus:outline-none focus:border-blue-500"
+                                                placeholder="End"
+                                                className="bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs focus:outline-none focus:border-blue-500 text-white"
                                                 value={item.endTime}
                                                 onChange={(e) => handleScheduleChange(idx, 'endTime', e.target.value)}
                                             />
                                             <input
                                                 type="text"
                                                 placeholder="Room"
-                                                className="bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs focus:outline-none focus:border-blue-500"
+                                                className="bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs focus:outline-none focus:border-blue-500 text-white"
                                                 value={item.room}
                                                 onChange={(e) => handleScheduleChange(idx, 'room', e.target.value)}
                                             />
+                                            {formData.schedule.length > 1 && (
+                                                <button
+                                                    type="button"
+                                                    onClick={() => removeScheduleItem(idx)}
+                                                    className="text-red-400 hover:text-red-300 transition-colors flex items-center justify-center"
+                                                >
+                                                    <Trash2 className="w-4 h-4" />
+                                                </button>
+                                            )}
                                         </div>
                                     ))}
                                 </div>
@@ -283,8 +365,8 @@ const ClassManagement = () => {
                                                 key={s._id}
                                                 onClick={() => handleStudentToggle(s._id)}
                                                 className={`flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all border ${formData.students.includes(s._id)
-                                                        ? 'bg-blue-600/10 border-blue-500/30 text-blue-200'
-                                                        : 'bg-slate-900/50 border-slate-800 text-slate-400 opacity-60 hover:opacity-100'
+                                                    ? 'bg-blue-600/10 border-blue-500/30 text-blue-200'
+                                                    : 'bg-slate-900/50 border-slate-800 text-slate-400 opacity-60 hover:opacity-100'
                                                     }`}
                                             >
                                                 <div className="flex items-center gap-3">
@@ -298,13 +380,13 @@ const ClassManagement = () => {
                                 </div>
 
                                 <button
-                                    disabled={createClassMutation.isPending}
+                                    disabled={isPending}
                                     type="submit"
                                     className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 text-white font-bold py-4 rounded-2xl transition-all shadow-lg shadow-blue-600/30 active:scale-[0.98] flex items-center justify-center gap-2"
                                 >
-                                    {createClassMutation.isPending ? (
+                                    {isPending ? (
                                         <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                                    ) : 'Initialize Class Connection'}
+                                    ) : editingClass ? 'Update Class' : 'Initialize Class Connection'}
                                 </button>
                             </form>
                         </div>
@@ -316,3 +398,4 @@ const ClassManagement = () => {
 };
 
 export default ClassManagement;
+

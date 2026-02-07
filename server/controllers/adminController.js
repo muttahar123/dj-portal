@@ -98,3 +98,76 @@ export const getAllClasses = async (req, res, next) => {
         next(err);
     }
 };
+
+// @desc    Update class details
+// @route   PUT /api/admin/classes/:id
+// @access  Private/Admin
+export const updateClass = async (req, res, next) => {
+    try {
+        const classToUpdate = await Class.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidators: true
+        });
+
+        if (!classToUpdate) {
+            return res.status(404).json({ message: 'Class not found' });
+        }
+
+        // Update students' classes array if students list is modified
+        // This is a simplified version; for robust sync, we'd compare old vs new students
+        if (req.body.students) {
+            // Optional: Logic to remove this class from students who are no longer in the list
+            // For now, we assume this operation sets the students list. 
+            // A more complex implementation would diff the lists.
+            await User.updateMany(
+                { _id: { $in: req.body.students } },
+                { $addToSet: { classes: classToUpdate._id } }
+            );
+        }
+
+        res.status(200).json({ success: true, data: classToUpdate });
+    } catch (err) {
+        next(err);
+    }
+};
+
+// @desc    Delete class (Soft delete)
+// @route   DELETE /api/admin/classes/:id
+// @access  Private/Admin
+export const deleteClass = async (req, res, next) => {
+    try {
+        const classToDelete = await Class.findById(req.params.id);
+
+        if (!classToDelete) {
+            return res.status(404).json({ message: 'Class not found' });
+        }
+
+        classToDelete.isDeleted = true;
+        await classToDelete.save();
+
+        res.status(200).json({ success: true, data: {} });
+    } catch (err) {
+        next(err);
+    }
+};
+
+// @desc    Delete user (Soft delete)
+// @route   DELETE /api/admin/users/:id
+// @access  Private/Admin
+export const deleteUser = async (req, res, next) => {
+    try {
+        const user = await User.findById(req.params.id);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        user.isDeleted = true;
+        await user.save();
+
+        res.status(200).json({ success: true, data: {} });
+    } catch (err) {
+        next(err);
+    }
+};
+

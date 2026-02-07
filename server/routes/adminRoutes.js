@@ -1,5 +1,5 @@
 import express from 'express';
-import { createUser, updateUser, createClass, getAllUsers, getAllClasses } from '../controllers/adminController.js';
+import { createUser, updateUser, deleteUser, createClass, updateClass, deleteClass, getAllUsers, getAllClasses } from '../controllers/adminController.js';
 import { protect, authorize } from '../middleware/auth.js';
 
 const router = express.Router();
@@ -12,11 +12,17 @@ router.route('/users')
     .post(createUser);
 
 router.route('/users/:id')
-    .put(updateUser);
+    .put(updateUser)
+    .delete(deleteUser);
 
 router.route('/classes')
     .get(getAllClasses)
     .post(createClass);
 
+router.route('/classes/:id')
+    .put(updateClass)
+    .delete(deleteClass);
+
 export default router;
+
 

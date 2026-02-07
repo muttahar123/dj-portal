@@ -15,12 +15,12 @@ import { rateLimit } from 'express-rate-limit';
 import connectDB from './config/db.js';
 import { connectRedis } from './config/redis.js';
 
-// Route files
 import auth from './routes/authRoutes.js';
 import teacher from './routes/teacherRoutes.js';
 import student from './routes/studentRoutes.js';
 import admin from './routes/adminRoutes.js';
 import assignments from './routes/assignmentRoutes.js';
+import announcements from './routes/announcementRoutes.js';
 import { initSocket } from './socket.js';
 
 // Initialize Express
@@ -70,12 +70,12 @@ app.get('/', (req, res) => {
     res.json({ message: 'Welcome to DJ Science College Student Portal API' });
 });
 
-// Mount routers
 app.use('/api/auth', auth);
 app.use('/api/teacher', teacher);
 app.use('/api/student', student);
 app.use('/api/admin', admin);
 app.use('/api/assignments', assignments);
+app.use('/api/announcements', announcements);
 
 // Health Check
 app.get('/api/health', (req, res) => {

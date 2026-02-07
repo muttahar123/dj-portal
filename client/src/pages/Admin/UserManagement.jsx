@@ -11,7 +11,8 @@ import {
     UserPlus,
     ShieldCheck,
     User,
-    Users
+    Users,
+    X
 } from 'lucide-react';
 import { toast } from 'react-toastify';
 
@@ -20,6 +21,7 @@ const UserManagement = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [roleFilter, setRoleFilter] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editingUser, setEditingUser] = useState(null);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -46,15 +48,65 @@ const UserManagement = () => {
         onSuccess: () => {
             queryClient.invalidateQueries(['users']);
             toast.success('User created successfully');
-            setIsModalOpen(false);
-            setFormData({
-                name: '', email: '', password: '', role: 'STUDENT', department: '', studentId: '', teacherId: ''
-            });
+            closeModal();
         },
         onError: (err) => {
             toast.error(err.response?.data?.message || 'Failed to create user');
         }
     });
+
+    // Update user mutation
+    const updateUserMutation = useMutation({
+        mutationFn: ({ id, data }) => api.put(`/admin/users/${id}`, data),
+        onSuccess: () => {
+            queryClient.invalidateQueries(['users']);
+            toast.success('User updated successfully');
+            closeModal();
+        },
+        onError: (err) => {
+            toast.error(err.response?.data?.message || 'Failed to update user');
+        }
+    });
+
+    // Delete user mutation
+    const deleteUserMutation = useMutation({
+        mutationFn: (id) => api.delete(`/admin/users/${id}`),
+        onSuccess: () => {
+            queryClient.invalidateQueries(['users']);
+            toast.success('User deleted successfully');
+        },
+        onError: (err) => {
+            toast.error(err.response?.data?.message || 'Failed to delete user');
+        }
+    });
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setEditingUser(null);
+        setFormData({
+            name: '', email: '', password: '', role: 'STUDENT', department: '', studentId: '', teacherId: ''
+        });
+    };
+
+    const openEditModal = (user) => {
+        setEditingUser(user);
+        setFormData({
+            name: user.name,
+            email: user.email,
+            password: '',
+            role: user.role,
+            department: user.department || '',
+            studentId: user.studentId || '',
+            teacherId: user.teacherId || ''
+        });
+        setIsModalOpen(true);
+    };
+
+    const handleDelete = (user) => {
+        if (window.confirm(`Are you sure you want to delete ${user.name}?`)) {
+            deleteUserMutation.mutate(user._id);
+        }
+    };
 
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -62,7 +114,17 @@ const UserManagement = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        createUserMutation.mutate(formData);
+
+        if (editingUser) {
+            // For updates, only send fields that changed (excluding empty password)
+            const updateData = { ...formData };
+            if (!updateData.password) {
+                delete updateData.password;
+            }
+            updateUserMutation.mutate({ id: editingUser._id, data: updateData });
+        } else {
+            createUserMutation.mutate(formData);
+        }
     };
 
     const filteredUsers = usersData?.filter(user =>
@@ -172,9 +234,22 @@ const UserManagement = () => {
                                         </div>
                                     </td>
                                     <td className="px-6 py-4 text-right">
-                                        <button className="p-2 hover:bg-slate-800 rounded-lg text-slate-500 hover:text-white transition-all">
-                                            <MoreVertical className="w-5 h-5" />
-                                        </button>
+                                        <div className="flex items-center justify-end gap-2">
+                                            <button
+                                                onClick={() => openEditModal(user)}
+                                                className="p-2 hover:bg-blue-500/20 rounded-lg text-slate-500 hover:text-blue-400 transition-all"
+                                                title="Edit User"
+                                            >
+                                                <Edit2 className="w-4 h-4" />
+                                            </button>
+                                            <button
+                                                onClick={() => handleDelete(user)}
+                                                className="p-2 hover:bg-red-500/20 rounded-lg text-slate-500 hover:text-red-400 transition-all"
+                                                title="Delete User"
+                                            >
+                                                <Trash2 className="w-4 h-4" />
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             ))}
@@ -183,18 +258,20 @@ const UserManagement = () => {
                 </div>
             </div>
 
-            {/* Register User Modal */}
+            {/* Register/Edit User Modal */}
             {isModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-                    <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-md" onClick={() => setIsModalOpen(false)} />
+                    <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-md" onClick={closeModal} />
                     <div className="relative bg-slate-900 border border-slate-800 w-full max-w-xl rounded-3xl overflow-hidden shadow-2xl animate-in fade-in zoom-in duration-200">
                         <div className="p-8">
                             <div className="flex justify-between items-center mb-6">
                                 <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-                                    <UserPlus className="text-blue-500" />
-                                    Register New User
+                                    {editingUser ? <Edit2 className="text-blue-500" /> : <UserPlus className="text-blue-500" />}
+                                    {editingUser ? 'Edit User' : 'Register New User'}
                                 </h2>
-                                <button onClick={() => setIsModalOpen(false)} className="text-slate-500 hover:text-white transition-colors text-xl font-bold">×</button>
+                                <button onClick={closeModal} className="text-slate-500 hover:text-white transition-colors">
+                                    <X className="w-6 h-6" />
+                                </button>
                             </div>
 
                             <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -224,13 +301,15 @@ const UserManagement = () => {
                                 </div>
 
                                 <div className="space-y-1">
-                                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">Initial Password</label>
+                                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">
+                                        {editingUser ? 'New Password (leave blank to keep)' : 'Initial Password'}
+                                    </label>
                                     <input
                                         name="password"
                                         type="password"
-                                        required
+                                        required={!editingUser}
                                         className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 transition-all"
-                                        placeholder="Minimum 6 chars"
+                                        placeholder={editingUser ? 'Leave blank to keep current' : 'Minimum 6 chars'}
                                         value={formData.password}
                                         onChange={handleInputChange}
                                     />
@@ -290,16 +369,16 @@ const UserManagement = () => {
 
                                 <div className="md:col-span-2 pt-4">
                                     <button
-                                        disabled={createUserMutation.isPending}
+                                        disabled={createUserMutation.isPending || updateUserMutation.isPending}
                                         type="submit"
                                         className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 text-white font-bold py-4 rounded-2xl transition-all shadow-lg shadow-blue-600/30 active:scale-[0.98] flex items-center justify-center gap-2"
                                     >
-                                        {createUserMutation.isPending ? (
+                                        {(createUserMutation.isPending || updateUserMutation.isPending) ? (
                                             <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
                                         ) : (
                                             <>
                                                 <ShieldCheck className="w-5 h-5" />
-                                                Complete Registration
+                                                {editingUser ? 'Update User' : 'Complete Registration'}
                                             </>
                                         )}
                                     </button>
@@ -314,3 +393,4 @@ const UserManagement = () => {
 };
 
 export default UserManagement;
+

@@ -8,7 +8,9 @@ import {
     XCircle,
     ArrowRight,
     Search,
-    Users
+    Users,
+    Edit3,
+    Clock
 } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { format } from 'date-fns';
@@ -18,6 +20,8 @@ const Attendance = () => {
     const [selectedClass, setSelectedClass] = useState('');
     const [date, setDate] = useState(format(new Date(), 'yyyy-MM-dd'));
     const [records, setRecords] = useState({}); // { studentId: 'PRESENT' | 'ABSENT' }
+    const [existingAttendance, setExistingAttendance] = useState([]); // Fetched attendance records
+    const [isEditMode, setIsEditMode] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
 
     // Fetch assigned classes
@@ -40,34 +44,90 @@ const Attendance = () => {
         enabled: !!selectedClass
     });
 
-    // Initialize records when students load
+    // Fetch existing attendance for the selected class and date
+    const { data: attendanceData, isLoading: isAttendanceLoading, refetch: refetchAttendance } = useQuery({
+        queryKey: ['attendance', selectedClass, date],
+        queryFn: async () => {
+            if (!selectedClass || !date) return [];
+            const res = await api.get(`/teacher/attendance/${selectedClass}/${date}`);
+            return res.data.data;
+        },
+        enabled: !!selectedClass && !!date
+    });
+
+    // Load existing attendance or initialize new records
     useEffect(() => {
-        if (students) {
+        if (!students) return;
+
+        if (attendanceData && attendanceData.length > 0) {
+            // Existing attendance found - load it into records
+            setExistingAttendance(attendanceData);
+            const loadedRecords = {};
+            attendanceData.forEach(att => {
+                const studentId = att.student?._id || att.student;
+                loadedRecords[studentId] = att.status === 'P' ? 'PRESENT' : att.status === 'A' ? 'ABSENT' : 'LATE';
+            });
+            setRecords(loadedRecords);
+            setIsEditMode(true);
+        } else {
+            // No existing attendance - initialize all as PRESENT
             const initialRecords = {};
             students.forEach(s => {
                 initialRecords[s._id] = 'PRESENT';
             });
             setRecords(initialRecords);
+            setExistingAttendance([]);
+            setIsEditMode(false);
         }
-    }, [students]);
+    }, [students, attendanceData]);
 
     const markAttendanceMutation = useMutation({
         mutationFn: (attendanceData) => api.post('/teacher/attendance', attendanceData),
         onSuccess: () => {
             toast.success('Attendance recorded successfully');
-            setSelectedClass('');
-            setRecords({});
+            queryClient.invalidateQueries(['attendance', selectedClass, date]);
+            refetchAttendance();
         },
         onError: (err) => {
             toast.error(err.response?.data?.message || 'Failed to record attendance');
         }
     });
 
+    const updateAttendanceMutation = useMutation({
+        mutationFn: ({ id, status }) => api.put(`/teacher/attendance/${id}`, { status }),
+        onSuccess: () => {
+            toast.success('Attendance updated successfully');
+            queryClient.invalidateQueries(['attendance', selectedClass, date]);
+        },
+        onError: (err) => {
+            toast.error(err.response?.data?.message || 'Failed to update attendance');
+        }
+    });
+
     const handleStatusToggle = (studentId) => {
+        const currentStatus = records[studentId];
+        let newStatus;
+        if (currentStatus === 'PRESENT') newStatus = 'ABSENT';
+        else if (currentStatus === 'ABSENT') newStatus = 'LATE';
+        else newStatus = 'PRESENT';
+
         setRecords(prev => ({
             ...prev,
-            [studentId]: prev[studentId] === 'PRESENT' ? 'ABSENT' : 'PRESENT'
+            [studentId]: newStatus
         }));
+
+        // If in edit mode, update immediately
+        if (isEditMode) {
+            const attendanceRecord = existingAttendance.find(att =>
+                (att.student?._id || att.student) === studentId
+            );
+            if (attendanceRecord) {
+                updateAttendanceMutation.mutate({
+                    id: attendanceRecord._id,
+                    status: newStatus.charAt(0) // P, A, or L
+                });
+            }
+        }
     };
 
     const handleSubmit = (e) => {
@@ -76,7 +136,7 @@ const Attendance = () => {
 
         const formattedRecords = Object.entries(records).map(([studentId, status]) => ({
             studentId,
-            status: status.charAt(0) // P or A
+            status: status.charAt(0) // P, A, or L
         }));
 
         markAttendanceMutation.mutate({
@@ -90,6 +150,22 @@ const Attendance = () => {
         s.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         s.studentId?.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    const getStatusButton = (studentId, statusType, icon, label, activeColor, shadowColor) => {
+        const isActive = records[studentId] === statusType;
+        return (
+            <button
+                onClick={() => handleStatusToggle(studentId)}
+                className={`px-3 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${isActive
+                    ? `${activeColor} text-white shadow-lg ${shadowColor}`
+                    : 'text-slate-500 bg-transparent hover:text-slate-300'
+                    }`}
+            >
+                {icon}
+                {label}
+            </button>
+        );
+    };
 
     return (
         <div className="space-y-6">
@@ -106,13 +182,13 @@ const Attendance = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Configuration Panel */}
                 <div className="bg-slate-900/40 border border-slate-800 rounded-3xl p-6 lg:h-fit sticky top-24">
-                    <h2 className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-6 border-l-2 border-blue-500 pl-3">Sesion Setup</h2>
+                    <h2 className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-6 border-l-2 border-blue-500 pl-3">Session Setup</h2>
 
                     <div className="space-y-6">
                         <div className="space-y-1.5">
                             <label className="text-xs font-semibold text-slate-400">Target Class</label>
                             <select
-                                className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500"
+                                className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 text-white"
                                 value={selectedClass}
                                 onChange={(e) => setSelectedClass(e.target.value)}
                             >
@@ -129,7 +205,7 @@ const Attendance = () => {
                                 <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
                                 <input
                                     type="date"
-                                    className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3 pl-10 pr-4 focus:outline-none focus:border-blue-500 text-sm"
+                                    className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3 pl-10 pr-4 focus:outline-none focus:border-blue-500 text-sm text-white"
                                     value={date}
                                     onChange={(e) => setDate(e.target.value)}
                                 />
@@ -138,30 +214,51 @@ const Attendance = () => {
 
                         {selectedClass && (
                             <div className="pt-4 border-t border-slate-800/50 space-y-4">
+                                {isEditMode && (
+                                    <div className="flex items-center gap-2 p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl">
+                                        <Edit3 className="w-4 h-4 text-amber-400" />
+                                        <span className="text-xs text-amber-200 font-medium">Editing existing records</span>
+                                    </div>
+                                )}
                                 <div className="flex justify-between items-center text-sm">
                                     <span className="text-slate-400">Total Enrollment:</span>
                                     <span className="font-bold text-slate-200">{students?.length || 0}</span>
                                 </div>
                                 <div className="flex justify-between items-center text-sm">
-                                    <span className="text-slate-400">Marked Present:</span>
+                                    <span className="text-slate-400">Present:</span>
                                     <span className="font-bold text-emerald-400">
                                         {Object.values(records).filter(status => status === 'PRESENT').length}
                                     </span>
                                 </div>
-                                <button
-                                    onClick={handleSubmit}
-                                    disabled={markAttendanceMutation.isPending || !selectedClass}
-                                    className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 group"
-                                >
-                                    {markAttendanceMutation.isPending ? (
-                                        <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                                    ) : (
-                                        <>
-                                            Confirm Records
-                                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                        </>
-                                    )}
-                                </button>
+                                <div className="flex justify-between items-center text-sm">
+                                    <span className="text-slate-400">Absent:</span>
+                                    <span className="font-bold text-red-400">
+                                        {Object.values(records).filter(status => status === 'ABSENT').length}
+                                    </span>
+                                </div>
+                                <div className="flex justify-between items-center text-sm">
+                                    <span className="text-slate-400">Late:</span>
+                                    <span className="font-bold text-amber-400">
+                                        {Object.values(records).filter(status => status === 'LATE').length}
+                                    </span>
+                                </div>
+
+                                {!isEditMode && (
+                                    <button
+                                        onClick={handleSubmit}
+                                        disabled={markAttendanceMutation.isPending || !selectedClass}
+                                        className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 group"
+                                    >
+                                        {markAttendanceMutation.isPending ? (
+                                            <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                                        ) : (
+                                            <>
+                                                Confirm Records
+                                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                            </>
+                                        )}
+                                    </button>
+                                )}
                             </div>
                         )}
                     </div>
@@ -174,7 +271,7 @@ const Attendance = () => {
                             <Users className="w-12 h-12 text-slate-700" />
                             <p>Select a class to begin marking attendance.</p>
                         </div>
-                    ) : isStudentsLoading ? (
+                    ) : isStudentsLoading || isAttendanceLoading ? (
                         <div className="flex justify-center p-20">
                             <div className="w-8 h-8 border-2 border-blue-500/20 border-t-blue-500 rounded-full animate-spin" />
                         </div>
@@ -185,7 +282,7 @@ const Attendance = () => {
                                 <input
                                     type="text"
                                     placeholder="Quick search by name or ID..."
-                                    className="w-full bg-slate-900/40 border border-slate-800 rounded-2xl py-3 pl-12 pr-4 text-sm focus:outline-none focus:border-blue-500 transition-all font-medium"
+                                    className="w-full bg-slate-900/40 border border-slate-800 rounded-2xl py-3 pl-12 pr-4 text-sm focus:outline-none focus:border-blue-500 transition-all font-medium text-white"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                 />
@@ -208,26 +305,30 @@ const Attendance = () => {
                                         </div>
 
                                         <div className="flex bg-slate-950 p-1.5 rounded-xl border border-slate-800">
-                                            <button
-                                                onClick={() => handleStatusToggle(student._id)}
-                                                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${records[student._id] === 'PRESENT'
-                                                        ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20'
-                                                        : 'text-slate-500 bg-transparent hover:text-slate-300'
-                                                    }`}
-                                            >
-                                                <CheckCircle className={`w-3.5 h-3.5 ${records[student._id] === 'PRESENT' ? 'opacity-100' : 'opacity-30'}`} />
-                                                PRESENT
-                                            </button>
-                                            <button
-                                                onClick={() => handleStatusToggle(student._id)}
-                                                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${records[student._id] === 'ABSENT'
-                                                        ? 'bg-red-500 text-white shadow-lg shadow-red-500/20'
-                                                        : 'text-slate-500 bg-transparent hover:text-slate-300'
-                                                    }`}
-                                            >
-                                                <XCircle className={`w-3.5 h-3.5 ${records[student._id] === 'ABSENT' ? 'opacity-100' : 'opacity-30'}`} />
-                                                ABSENT
-                                            </button>
+                                            {getStatusButton(
+                                                student._id,
+                                                'PRESENT',
+                                                <CheckCircle className={`w-3.5 h-3.5 ${records[student._id] === 'PRESENT' ? 'opacity-100' : 'opacity-30'}`} />,
+                                                'P',
+                                                'bg-emerald-500',
+                                                'shadow-emerald-500/20'
+                                            )}
+                                            {getStatusButton(
+                                                student._id,
+                                                'ABSENT',
+                                                <XCircle className={`w-3.5 h-3.5 ${records[student._id] === 'ABSENT' ? 'opacity-100' : 'opacity-30'}`} />,
+                                                'A',
+                                                'bg-red-500',
+                                                'shadow-red-500/20'
+                                            )}
+                                            {getStatusButton(
+                                                student._id,
+                                                'LATE',
+                                                <Clock className={`w-3.5 h-3.5 ${records[student._id] === 'LATE' ? 'opacity-100' : 'opacity-30'}`} />,
+                                                'L',
+                                                'bg-amber-500',
+                                                'shadow-amber-500/20'
+                                            )}
                                         </div>
                                     </div>
                                 ))}
@@ -241,3 +342,4 @@ const Attendance = () => {
 };
 
 export default Attendance;
+

@@ -77,3 +77,39 @@ const sendTokenResponse = (user, statusCode, res) => {
         });
 };
 
+// @desc    Update user's own profile (name, password)
+// @route   PUT /api/auth/profile
+// @access  Private
+export const updateProfile = async (req, res, next) => {
+    const { name, password } = req.body;
+
+    try {
+        const user = await User.findById(req.user.id).select('+password');
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        if (name) {
+            user.name = name;
+        }
+
+        if (password) {
+            user.password = password;
+        }
+
+        await user.save();
+
+        res.status(200).json({
+            success: true,
+            data: {
+                id: user._id,
+                name: user.name,
+                email: user.email
+            }
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
