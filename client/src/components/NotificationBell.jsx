@@ -15,7 +15,8 @@ const NotificationBell = ({ token }) => {
         if (!token) return;
 
         // Connect to socket
-        socketRef.current = io('http://localhost:5000', {
+        const socketUrl = import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000';
+        socketRef.current = io(socketUrl, {
             auth: { token }
         });
 
