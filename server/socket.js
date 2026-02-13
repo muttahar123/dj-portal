@@ -12,10 +12,18 @@ export const initSocket = async (server) => {
 
     await subClient.connect();
 
+    const allowedOrigins = [
+        process.env.CORS_ORIGIN,
+        'http://localhost:5173',
+        'http://localhost:4000',
+        'http://localhost:5000',
+        'https://djportal.vercel.app'
+    ].filter(Boolean);
+
     io = new Server(server, {
         adapter: createAdapter(pubClient, subClient),
         cors: {
-            origin: process.env.CORS_ORIGIN || "http://localhost:5173",
+            origin: allowedOrigins,
             methods: ["GET", "POST"],
             credentials: true
         }

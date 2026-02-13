@@ -40,10 +40,28 @@ await initSocket(server);
 
 // Middleware
 app.use(helmet()); // Security headers
+
+const allowedOrigins = [
+    process.env.CORS_ORIGIN,
+    'http://localhost:5173',
+    'http://localhost:4000',
+    'http://localhost:5000',
+    'https://djportal.vercel.app'
+].filter(Boolean);
+
 app.use(cors({
-    origin: process.env.CORS_ORIGIN || "http://localhost:5173",
+    origin: function (origin, callback) {
+        // allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+            var msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    },
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"]
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"]
 })); // CORS
 app.use(express.json()); // Body parser
 app.use(cookieParser()); // Cookie parser
@@ -61,8 +79,9 @@ app.use((req, res, next) => {
 });
 
 app.use(mongoSanitize()); // Prevent NoSQL Injection
+app.use(morgan('combined')); // Production-ready logging
 if (process.env.NODE_ENV === 'development') {
-    app.use(morgan('dev')); // Logging
+    app.use(morgan('dev')); // Dev logging
 }
 
 // Rate Limiting
@@ -100,7 +119,7 @@ app.use((err, req, res, next) => {
     });
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4000;
 
 server.listen(PORT, () => {
     console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
