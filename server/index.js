@@ -32,12 +32,19 @@ const server = http.createServer(app);
 connectDB();
 connectRedis();
 
+// Trust proxy for Render/Vercel load balancers
+app.set('trust proxy', 1);
+
 // Initialize Socket.io
 await initSocket(server);
 
 // Middleware
 app.use(helmet()); // Security headers
-app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true })); // CORS
+app.use(cors({
+    origin: process.env.CORS_ORIGIN || "http://localhost:5173",
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"]
+})); // CORS
 app.use(express.json()); // Body parser
 app.use(cookieParser()); // Cookie parser
 
