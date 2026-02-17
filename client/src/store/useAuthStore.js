@@ -22,9 +22,11 @@ const useAuthStore = create((set) => ({
             const res = await api.get('/auth/me');
             const user = res.data.user;
             localStorage.setItem('user', JSON.stringify(user));
+            // Keep token in localStorage if it was already there (from login)
             set({ user, isAuthenticated: true, isInitialLoad: false });
         } catch (error) {
             localStorage.removeItem('user');
+            localStorage.removeItem('token');
             set({ user: null, isAuthenticated: false, isInitialLoad: false });
         }
     },
@@ -34,7 +36,9 @@ const useAuthStore = create((set) => ({
         try {
             const res = await api.post('/auth/login', { email, password });
             const user = res.data.user;
+            const token = res.data.token;
             localStorage.setItem('user', JSON.stringify(user));
+            localStorage.setItem('token', token);
             set({ user, isAuthenticated: true, loading: false });
             return { success: true };
         } catch (error) {
@@ -49,6 +53,7 @@ const useAuthStore = create((set) => ({
     logout: async () => {
         await api.get('/auth/logout');
         localStorage.removeItem('user');
+        localStorage.removeItem('token');
         set({ user: null, isAuthenticated: false });
     },
 }));
