@@ -25,7 +25,7 @@ architecture.md
 DB Schemas: 
 database_schema.md
 🛠️ How to Start
-Database: Ensure MongoDB and Redis are running.
+Database: Ensure MongoDB is running.
 Server: Run cd server && npm run dev.
 Client: Run cd client && npm run dev.
 The portal is now ready for you to begin adding specific academic content or deploying to your staging environment. Let me know if you need help with a specific feature next!

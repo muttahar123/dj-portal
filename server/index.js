@@ -13,7 +13,6 @@ import morgan from 'morgan';
 import mongoSanitize from 'express-mongo-sanitize';
 import { rateLimit } from 'express-rate-limit';
 import connectDB from './config/db.js';
-import { connectRedis } from './config/redis.js';
 
 import auth from './routes/authRoutes.js';
 import teacher from './routes/teacherRoutes.js';
@@ -28,15 +27,13 @@ import { initSocket } from './socket.js';
 const app = express();
 const server = http.createServer(app);
 
-// Connect to Databases
 connectDB();
-connectRedis();
 
 // Trust proxy for Render/Vercel load balancers
 app.set('trust proxy', 1);
 
 // Initialize Socket.io
-await initSocket(server);
+initSocket(server);
 
 // Middleware
 app.use(helmet()); // Security headers
