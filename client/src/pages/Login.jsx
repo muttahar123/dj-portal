@@ -22,49 +22,43 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-slate-950 text-white relative overflow-hidden">
-            {/* Background Orbs */}
-            <div className="absolute top-0 -left-4 w-72 h-72 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-            <div className="absolute top-0 -right-4 w-72 h-72 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-            <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-
-            <div className="max-w-md w-full p-8 bg-slate-900/50 backdrop-blur-xl border border-slate-800 rounded-3xl shadow-2xl relative z-10">
+        <div className="min-h-screen flex items-center justify-center bg-[var(--color-background)] text-[var(--color-primary-navy)] relative overflow-hidden">
+            <div className="max-w-md w-full p-8 bg-[var(--color-surface-default)] border border-[#E2E8F0] rounded-[var(--radius-lg)] shadow-[var(--shadow-lg)] relative z-10">
                 <div className="text-center mb-10">
-                    <div className="w-10 h-10 rounded-xl bg-white inline-flex items-center justify-center">
-                        {/* <GraduationCap className="text-white w-6 h-6" /> */}
+                    <div className="w-12 h-12 rounded-[var(--radius-default)] bg-[var(--color-background)] border border-[#E2E8F0] inline-flex items-center justify-center p-2 mb-4">
                         <img src="/dj-science-college-logo.png" alt="DJ Science College Logo" className="w-full h-full object-contain" />
                     </div>
-                    <h1 className="text-3xl font-bold bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
+                    <h1 className="text-3xl font-bold text-[var(--color-primary-navy)] font-headline tracking-tight">
                         DJ Science College
                     </h1>
-                    <p className="text-slate-400 mt-2">Student Portal Login</p>
+                    <p className="text-[var(--color-secondary-slate)] mt-2">Student Portal Login</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium text-slate-300 ml-1">Email Address</label>
+                    <div className="space-y-1">
+                        <label className="text-sm font-medium text-[var(--color-primary-navy)] ml-1">Email Address</label>
                         <div className="relative group">
-                            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-blue-400 transition-colors" />
+                            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--color-secondary-slate)] group-focus-within:text-[var(--color-primary-navy)] transition-colors" />
                             <input
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="w-full bg-slate-800/50 border border-slate-700 rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all text-white placeholder:text-slate-600"
+                                className="w-full bg-[var(--color-surface-default)] border border-[#E2E8F0] rounded-[var(--radius-default)] py-3 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-[#0F172A18] focus:border-[var(--color-primary-navy)] transition-all text-[var(--color-primary-navy)] placeholder:text-[#94A3B8]"
                                 placeholder="name@example.com"
                                 required
                             />
                         </div>
                     </div>
 
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium text-slate-300 ml-1">Password</label>
+                    <div className="space-y-1">
+                        <label className="text-sm font-medium text-[var(--color-primary-navy)] ml-1">Password</label>
                         <div className="relative group">
-                            <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-blue-400 transition-colors" />
+                            <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--color-secondary-slate)] group-focus-within:text-[var(--color-primary-navy)] transition-colors" />
                             <input
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="w-full bg-slate-800/50 border border-slate-700 rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all text-white placeholder:text-slate-600"
+                                className="w-full bg-[var(--color-surface-default)] border border-[#E2E8F0] rounded-[var(--radius-default)] py-3 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-[#0F172A18] focus:border-[var(--color-primary-navy)] transition-all text-[var(--color-primary-navy)] placeholder:text-[#94A3B8]"
                                 placeholder="••••••••"
                                 required
                             />
@@ -73,25 +67,25 @@ const Login = () => {
 
                     <div className="flex items-center justify-between text-sm px-1">
                         <label className="flex items-center space-x-2 cursor-pointer group">
-                            <input type="checkbox" className="w-4 h-4 rounded border-slate-700 bg-slate-800 text-blue-600 focus:ring-blue-500/50 transition-all" />
-                            <span className="text-slate-400 group-hover:text-slate-200">Remember me</span>
+                            <input type="checkbox" className="w-4 h-4 rounded border-[#CBD5E1] bg-[var(--color-surface-default)] text-[var(--color-primary-navy)] focus:ring-[var(--color-primary-navy)] transition-all" />
+                            <span className="text-[var(--color-secondary-slate)] group-hover:text-[var(--color-primary-navy)]">Remember me</span>
                         </label>
-                        <a href="#" className="text-blue-400 hover:text-blue-300 font-medium transition-colors">Forgot password?</a>
+                        <a href="#" className="text-[var(--color-tertiary-sage)] hover:underline font-medium transition-colors">Forgot password?</a>
                     </div>
 
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 rounded-xl transition-all shadow-lg shadow-blue-600/20 active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                        className="w-full bg-[var(--color-primary-navy)] hover:bg-[#020617] text-white font-semibold py-3 rounded-[var(--radius-default)] transition-all shadow-sm active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
                         {loading && <Loader2 className="w-5 h-5 animate-spin" />}
                         {loading ? 'Signing in...' : 'Sign In'}
                     </button>
                 </form>
 
-                <div className="mt-8 pt-8 border-t border-slate-800 text-center">
-                    <p className="text-slate-500 text-sm">
-                        New student? Contact the <span className="text-blue-400">Administration</span> for credentials.
+                <div className="mt-8 pt-8 border-t border-[#E2E8F0] text-center">
+                    <p className="text-[var(--color-secondary-slate)] text-sm">
+                        New student? Contact the <span className="text-[var(--color-tertiary-sage)] font-medium">Administration</span> for credentials.
                     </p>
                 </div>
             </div>

@@ -17,17 +17,17 @@ const Navbar = ({ toggleSidebar }) => {
     };
 
     return (
-        <nav className="sticky top-0 z-40 w-full bg-slate-900/50 backdrop-blur-xl border-b border-slate-800">
+        <nav className="sticky top-0 z-40 w-full bg-[var(--color-surface-default)] border-b border-[#E2E8F0]">
             <div className="px-4 h-16 flex items-center justify-between">
                 <div className="flex items-center gap-4">
                     <button
                         onClick={toggleSidebar}
-                        className="p-2 hover:bg-slate-800 rounded-lg lg:hidden transition-colors"
+                        className="p-2 hover:bg-[#F1F5F9] rounded-[var(--radius-default)] lg:hidden transition-colors"
                     >
-                        <Menu className="w-6 h-6 text-slate-400" />
+                        <Menu className="w-6 h-6 text-[var(--color-secondary-slate)]" />
                     </button>
                     <div className="flex items-baseline gap-2">
-                        <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">
+                        <span className="text-xl font-bold text-[var(--color-primary-navy)] font-headline">
                             DJ Student Portal
                         </span>
                     </div>
@@ -36,19 +36,19 @@ const Navbar = ({ toggleSidebar }) => {
                 <div className="flex items-center gap-4">
                     <NotificationBell token={getToken()} />
 
-                    <div className="h-6 w-px bg-slate-800"></div>
+                    <div className="h-6 w-px bg-[#E2E8F0]"></div>
 
                     <div className="flex items-center gap-3 pl-2">
                         <div className="hidden md:flex flex-col items-end text-sm">
-                            <span className="font-semibold text-slate-100">{user?.name}</span>
-                            <span className="text-xs text-slate-400">{user?.role}</span>
+                            <span className="font-semibold text-[var(--color-primary-navy)]">{user?.name}</span>
+                            <span className="text-xs text-[var(--color-secondary-slate)] font-medium tracking-wide">{user?.role}</span>
                         </div>
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center border-2 border-slate-800 shadow-lg overflow-hidden capitalize text-white font-bold">
+                        <div className="w-10 h-10 rounded-[var(--radius-full)] bg-[var(--color-tertiary-sage)] flex items-center justify-center shadow-sm overflow-hidden capitalize text-white font-bold">
                             {user?.name?.charAt(0) || <UserIcon className="w-5 h-5" />}
                         </div>
                         <button
                             onClick={logout}
-                            className="p-2 hover:bg-red-500/10 hover:text-red-500 rounded-lg text-slate-400 transition-all group"
+                            className="p-2 hover:bg-[#F1F5F9] hover:text-[var(--color-error)] rounded-[var(--radius-default)] text-[var(--color-secondary-slate)] transition-all group"
                             title="Logout"
                         >
                             <LogOut className="w-5 h-5 group-hover:scale-110 transition-transform" />
