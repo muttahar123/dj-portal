@@ -157,8 +157,8 @@ const Attendance = () => {
             <button
                 onClick={() => handleStatusToggle(studentId)}
                 className={`px-3 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${isActive
-                    ? `${activeColor} text-white shadow-lg ${shadowColor}`
-                    : 'text-slate-500 bg-transparent hover:text-slate-300'
+                    ? `${activeColor} text-[var(--color-primary-navy)] shadow-lg ${shadowColor}`
+                    : 'text-[var(--color-secondary-slate)] bg-transparent hover:text-[var(--color-primary-navy)]'
                     }`}
             >
                 {icon}
@@ -171,24 +171,24 @@ const Attendance = () => {
         <div className="space-y-6">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-white flex items-center gap-2">
+                    <h1 className="text-2xl font-bold text-[var(--color-primary-navy)] flex items-center gap-2">
                         <ClipboardCheck className="w-6 h-6 text-emerald-500" />
                         Class Attendance
                     </h1>
-                    <p className="text-slate-400 text-sm mt-1">Mark and manage daily presence tracking.</p>
+                    <p className="text-[var(--color-secondary-slate)] text-sm mt-1">Mark and manage daily presence tracking.</p>
                 </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Configuration Panel */}
-                <div className="bg-slate-900/40 border border-slate-800 rounded-3xl p-6 lg:h-fit sticky top-24">
-                    <h2 className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-6 border-l-2 border-blue-500 pl-3">Session Setup</h2>
+                <div className="bg-[var(--color-surface-default)] shadow-sm border border-[#E2E8F0] rounded-3xl p-6 lg:h-fit sticky top-24">
+                    <h2 className="text-sm font-bold text-[var(--color-secondary-slate)] uppercase tracking-widest mb-6 border-l-2 border-blue-500 pl-3">Session Setup</h2>
 
                     <div className="space-y-6">
                         <div className="space-y-1.5">
-                            <label className="text-xs font-semibold text-slate-400">Target Class</label>
+                            <label className="text-xs font-semibold text-[var(--color-secondary-slate)]">Target Class</label>
                             <select
-                                className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 text-white"
+                                className="w-full bg-[var(--color-background)] border border-[#E2E8F0] rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 text-[var(--color-primary-navy)]"
                                 value={selectedClass}
                                 onChange={(e) => setSelectedClass(e.target.value)}
                             >
@@ -200,12 +200,12 @@ const Attendance = () => {
                         </div>
 
                         <div className="space-y-1.5">
-                            <label className="text-xs font-semibold text-slate-400">Tracking Date</label>
+                            <label className="text-xs font-semibold text-[var(--color-secondary-slate)]">Tracking Date</label>
                             <div className="relative">
-                                <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                                <CalendarIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-secondary-slate)]" />
                                 <input
                                     type="date"
-                                    className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3 pl-10 pr-4 focus:outline-none focus:border-blue-500 text-sm text-white"
+                                    className="w-full bg-[var(--color-background)] border border-[#E2E8F0] rounded-xl py-3 pl-10 pr-4 focus:outline-none focus:border-blue-500 text-sm text-[var(--color-primary-navy)]"
                                     value={date}
                                     onChange={(e) => setDate(e.target.value)}
                                 />
@@ -213,7 +213,7 @@ const Attendance = () => {
                         </div>
 
                         {selectedClass && (
-                            <div className="pt-4 border-t border-slate-800/50 space-y-4">
+                            <div className="pt-4 border-t border-[#E2E8F0]/50 space-y-4">
                                 {isEditMode && (
                                     <div className="flex items-center gap-2 p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl">
                                         <Edit3 className="w-4 h-4 text-amber-400" />
@@ -221,23 +221,23 @@ const Attendance = () => {
                                     </div>
                                 )}
                                 <div className="flex justify-between items-center text-sm">
-                                    <span className="text-slate-400">Total Enrollment:</span>
-                                    <span className="font-bold text-slate-200">{students?.length || 0}</span>
+                                    <span className="text-[var(--color-secondary-slate)]">Total Enrollment:</span>
+                                    <span className="font-bold text-[var(--color-primary-navy)]">{students?.length || 0}</span>
                                 </div>
                                 <div className="flex justify-between items-center text-sm">
-                                    <span className="text-slate-400">Present:</span>
+                                    <span className="text-[var(--color-secondary-slate)]">Present:</span>
                                     <span className="font-bold text-emerald-400">
                                         {Object.values(records).filter(status => status === 'PRESENT').length}
                                     </span>
                                 </div>
                                 <div className="flex justify-between items-center text-sm">
-                                    <span className="text-slate-400">Absent:</span>
+                                    <span className="text-[var(--color-secondary-slate)]">Absent:</span>
                                     <span className="font-bold text-red-400">
                                         {Object.values(records).filter(status => status === 'ABSENT').length}
                                     </span>
                                 </div>
                                 <div className="flex justify-between items-center text-sm">
-                                    <span className="text-slate-400">Late:</span>
+                                    <span className="text-[var(--color-secondary-slate)]">Late:</span>
                                     <span className="font-bold text-amber-400">
                                         {Object.values(records).filter(status => status === 'LATE').length}
                                     </span>
@@ -247,7 +247,7 @@ const Attendance = () => {
                                     <button
                                         onClick={handleSubmit}
                                         disabled={markAttendanceMutation.isPending || !selectedClass}
-                                        className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 group"
+                                        className="w-full bg-[var(--color-primary-navy)] text-white hover:bg-[#020617] disabled:bg-blue-800 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 group"
                                     >
                                         {markAttendanceMutation.isPending ? (
                                             <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
@@ -267,7 +267,7 @@ const Attendance = () => {
                 {/* Student List */}
                 <div className="lg:col-span-2 space-y-4">
                     {!selectedClass ? (
-                        <div className="bg-slate-900/40 border border-slate-800 rounded-3xl p-12 text-center text-slate-500 flex flex-col items-center gap-4">
+                        <div className="bg-[var(--color-surface-default)] shadow-sm border border-[#E2E8F0] rounded-3xl p-12 text-center text-[var(--color-secondary-slate)] flex flex-col items-center gap-4">
                             <Users className="w-12 h-12 text-slate-700" />
                             <p>Select a class to begin marking attendance.</p>
                         </div>
@@ -278,11 +278,11 @@ const Attendance = () => {
                     ) : (
                         <>
                             <div className="relative group mb-4">
-                                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-blue-500 transition-colors" />
+                                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-secondary-slate)] group-focus-within:text-[var(--color-tertiary-sage)] transition-colors" />
                                 <input
                                     type="text"
                                     placeholder="Quick search by name or ID..."
-                                    className="w-full bg-slate-900/40 border border-slate-800 rounded-2xl py-3 pl-12 pr-4 text-sm focus:outline-none focus:border-blue-500 transition-all font-medium text-white"
+                                    className="w-full bg-[var(--color-surface-default)] shadow-sm border border-[#E2E8F0] rounded-2xl py-3 pl-12 pr-4 text-sm focus:outline-none focus:border-blue-500 transition-all font-medium text-[var(--color-primary-navy)]"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                 />
@@ -292,19 +292,19 @@ const Attendance = () => {
                                 {filteredStudents?.map((student) => (
                                     <div
                                         key={student._id}
-                                        className="group bg-slate-900/40 backdrop-blur-md border border-slate-800 rounded-2xl p-4 flex items-center justify-between hover:border-slate-700 transition-all shadow-lg shadow-black/5"
+                                        className="group bg-[var(--color-surface-default)] shadow-sm backdrop-blur-md border border-[#E2E8F0] rounded-2xl p-4 flex items-center justify-between hover:border-[#E2E8F0] transition-all shadow-lg shadow-black/5"
                                     >
                                         <div className="flex items-center gap-4">
-                                            <div className="w-11 h-11 rounded-full bg-slate-800 flex items-center justify-center text-slate-300 font-bold border border-slate-700 uppercase">
+                                            <div className="w-11 h-11 rounded-full bg-[var(--color-background)] border border-[#E2E8F0] flex items-center justify-center text-[var(--color-primary-navy)] font-bold border border-[#E2E8F0] uppercase">
                                                 {student.name.charAt(0)}
                                             </div>
                                             <div>
-                                                <div className="text-slate-100 font-semibold">{student.name}</div>
-                                                <div className="text-slate-500 text-[10px] font-mono tracking-wider uppercase">{student.studentId || 'ID Pending'}</div>
+                                                <div className="text-[var(--color-primary-navy)] font-semibold">{student.name}</div>
+                                                <div className="text-[var(--color-secondary-slate)] text-[10px] font-mono tracking-wider uppercase">{student.studentId || 'ID Pending'}</div>
                                             </div>
                                         </div>
 
-                                        <div className="flex bg-slate-950 p-1.5 rounded-xl border border-slate-800">
+                                        <div className="flex bg-[var(--color-background)] p-1.5 rounded-xl border border-[#E2E8F0]">
                                             {getStatusButton(
                                                 student._id,
                                                 'PRESENT',

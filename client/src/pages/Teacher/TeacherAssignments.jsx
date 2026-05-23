@@ -84,11 +84,11 @@ const TeacherAssignments = () => {
         <div className="space-y-6">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-white flex items-center gap-2">
+                    <h1 className="text-2xl font-bold text-[var(--color-primary-navy)] flex items-center gap-2">
                         <FileText className="w-6 h-6 text-indigo-500" />
                         Curriculum Assignments
                     </h1>
-                    <p className="text-slate-400 text-sm mt-1">Design and publish tasks for your classes.</p>
+                    <p className="text-[var(--color-secondary-slate)] text-sm mt-1">Design and publish tasks for your classes.</p>
                 </div>
                 {!viewSubmissionsId && (
                     <button
@@ -102,7 +102,7 @@ const TeacherAssignments = () => {
                 {viewSubmissionsId && (
                     <button
                         onClick={() => setViewSubmissionsId(null)}
-                        className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-white px-5 py-2.5 rounded-xl font-semibold transition-all"
+                        className="flex items-center gap-2 bg-[var(--color-background)] border border-[#E2E8F0] hover:bg-slate-700 text-white px-5 py-2.5 rounded-xl font-semibold transition-all"
                     >
                         Back to Explorer
                     </button>
@@ -115,30 +115,30 @@ const TeacherAssignments = () => {
                         <div className="w-10 h-10 border-2 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin" />
                     </div>
                 ) : assignments?.length === 0 ? (
-                    <div className="bg-slate-900/40 border border-slate-800 rounded-3xl p-16 text-center text-slate-500 flex flex-col items-center gap-4">
-                        <p className="text-lg font-medium text-slate-300">No active assignments</p>
+                    <div className="bg-[var(--color-surface-default)] shadow-sm border border-[#E2E8F0] rounded-3xl p-16 text-center text-[var(--color-secondary-slate)] flex flex-col items-center gap-4">
+                        <p className="text-lg font-medium text-[var(--color-primary-navy)]">No active assignments</p>
                         <p className="text-sm">Start by creating your first course assignment.</p>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         {assignments?.map((assignment) => (
-                            <div key={assignment._id} className="bg-slate-900/40 border border-slate-800 rounded-3xl p-6 hover:border-indigo-500/50 transition-all group flex flex-col h-full relative overflow-hidden shadow-xl">
+                            <div key={assignment._id} className="bg-[var(--color-surface-default)] shadow-sm border border-[#E2E8F0] rounded-3xl p-6 hover:border-indigo-500/50 transition-all group flex flex-col h-full relative overflow-hidden shadow-xl">
                                 <div className="flex justify-between items-start mb-4 relative z-10">
                                     <div className="flex gap-2">
                                         <span className="bg-indigo-500/10 text-indigo-400 text-[10px] font-bold px-2 py-1 rounded-lg uppercase tracking-wider border border-indigo-500/20">
                                             {assignment.class?.code || 'UNASSIGNED'}
                                         </span>
-                                        <span className="bg-slate-800/50 text-slate-400 text-[10px] font-bold px-2 py-1 rounded-lg uppercase tracking-wider border border-slate-800">
+                                        <span className="bg-[var(--color-background)] text-[var(--color-secondary-slate)] text-[10px] font-bold px-2 py-1 rounded-lg uppercase tracking-wider border border-[#E2E8F0]">
                                             {assignment.points} PTS
                                         </span>
                                     </div>
                                 </div>
 
-                                <h3 className="text-xl font-bold text-slate-100 mb-2 truncate group-hover:text-indigo-400 transition-colors">{assignment.title}</h3>
-                                <p className="text-slate-400 text-sm line-clamp-2 mb-6 flex-1">{assignment.description}</p>
+                                <h3 className="text-xl font-bold text-[var(--color-primary-navy)] mb-2 truncate group-hover:text-indigo-400 transition-colors">{assignment.title}</h3>
+                                <p className="text-[var(--color-secondary-slate)] text-sm line-clamp-2 mb-6 flex-1">{assignment.description}</p>
 
-                                <div className="flex items-center justify-between pt-4 border-t border-slate-800/50 text-xs">
-                                    <div className="flex items-center gap-2 text-slate-500">
+                                <div className="flex items-center justify-between pt-4 border-t border-[#E2E8F0]/50 text-xs">
+                                    <div className="flex items-center gap-2 text-[var(--color-secondary-slate)]">
                                         <Calendar className="w-3.5 h-3.5" />
                                         <span>Due: {format(new Date(assignment.dueDate), 'MMM dd, p')}</span>
                                     </div>
@@ -154,39 +154,39 @@ const TeacherAssignments = () => {
                     </div>
                 )
             ) : (
-                <div className="bg-slate-900/40 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl">
-                    <div className="p-6 bg-slate-800/20 border-b border-slate-800">
-                        <h2 className="text-lg font-bold text-slate-100">Review Student Work</h2>
-                        <p className="text-xs text-slate-500 mt-1">Assignment ID: {viewSubmissionsId}</p>
+                <div className="bg-[var(--color-surface-default)] shadow-sm border border-[#E2E8F0] rounded-3xl overflow-hidden shadow-2xl">
+                    <div className="p-6 bg-[#F1F5F9] border-b border-[#E2E8F0]">
+                        <h2 className="text-lg font-bold text-[var(--color-primary-navy)]">Review Student Work</h2>
+                        <p className="text-xs text-[var(--color-secondary-slate)] mt-1">Assignment ID: {viewSubmissionsId}</p>
                     </div>
                     <div className="p-0">
                         {submissionsLoading ? (
                             <div className="p-20 flex justify-center"><div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" /></div>
                         ) : currentSubmissions?.length === 0 ? (
-                            <div className="p-20 text-center text-slate-500 italic">No submissions received yet for this assignment.</div>
+                            <div className="p-20 text-center text-[var(--color-secondary-slate)] italic">No submissions received yet for this assignment.</div>
                         ) : (
                             <div className="divide-y divide-slate-800">
                                 {currentSubmissions?.map(sub => (
-                                    <div key={sub._id} className="p-6 flex items-center justify-between hover:bg-slate-800/20 transition-colors">
+                                    <div key={sub._id} className="p-6 flex items-center justify-between hover:bg-[#F1F5F9] transition-colors">
                                         <div className="flex items-center gap-4">
-                                            <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center font-bold text-slate-300">
+                                            <div className="w-10 h-10 rounded-full bg-[var(--color-background)] border border-[#E2E8F0] flex items-center justify-center font-bold text-[var(--color-primary-navy)]">
                                                 {sub.student?.name?.charAt(0)}
                                             </div>
                                             <div>
-                                                <div className="text-slate-100 font-semibold">{sub.student?.name}</div>
-                                                <div className="text-[10px] text-slate-500 font-mono">{sub.student?.studentId}</div>
+                                                <div className="text-[var(--color-primary-navy)] font-semibold">{sub.student?.name}</div>
+                                                <div className="text-[10px] text-[var(--color-secondary-slate)] font-mono">{sub.student?.studentId}</div>
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-6">
                                             <div className="text-right">
-                                                <div className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Submitted</div>
-                                                <div className="text-xs text-slate-300 font-medium">{format(new Date(sub.createdAt), 'MMM dd, HH:mm')}</div>
+                                                <div className="text-[10px] text-[var(--color-secondary-slate)] uppercase font-bold tracking-widest">Submitted</div>
+                                                <div className="text-xs text-[var(--color-primary-navy)] font-medium">{format(new Date(sub.createdAt), 'MMM dd, HH:mm')}</div>
                                             </div>
                                             <a
                                                 href={sub.fileUrl}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="bg-indigo-600/10 text-indigo-400 px-4 py-2 rounded-xl text-xs font-bold border border-indigo-500/20 hover:bg-indigo-600 hover:text-white transition-all shadow-lg shadow-indigo-600/5"
+                                                className="bg-indigo-600/10 text-indigo-400 px-4 py-2 rounded-xl text-xs font-bold border border-indigo-500/20 hover:bg-indigo-600 hover:text-[var(--color-primary-navy)] transition-all shadow-lg shadow-indigo-600/5"
                                             >
                                                 View Bundle
                                             </a>
@@ -202,24 +202,24 @@ const TeacherAssignments = () => {
             {/* Create Modal */}
             {isModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-                    <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-md" onClick={() => setIsModalOpen(false)} />
-                    <div className="relative bg-slate-900 border border-slate-800 w-full max-w-xl rounded-3xl overflow-hidden shadow-2xl">
+                    <div className="absolute inset-0 bg-[#0F172A]/60 backdrop-blur-md" onClick={() => setIsModalOpen(false)} />
+                    <div className="relative bg-[var(--color-surface-default)] border border-[#E2E8F0] w-full max-w-xl rounded-3xl overflow-hidden shadow-2xl">
                         <div className="p-8">
                             <div className="flex justify-between items-center mb-8">
-                                <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+                                <h2 className="text-2xl font-bold text-[var(--color-primary-navy)] flex items-center gap-2">
                                     <FilePlus className="text-indigo-500" />
                                     New Assignment
                                 </h2>
-                                <button onClick={() => setIsModalOpen(false)} className="text-slate-500 hover:text-white transition-colors text-xl font-bold">×</button>
+                                <button onClick={() => setIsModalOpen(false)} className="text-[var(--color-secondary-slate)] hover:text-[var(--color-primary-navy)] transition-colors text-xl font-bold">×</button>
                             </div>
 
                             <form onSubmit={handleSubmit} className="space-y-5">
                                 <div className="space-y-1.5">
-                                    <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest pl-1">Target Class</label>
+                                    <label className="text-[10px] font-bold text-[var(--color-secondary-slate)] uppercase tracking-widest pl-1">Target Class</label>
                                     <select
                                         name="classId"
                                         required
-                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl py-3 px-4 focus:outline-none focus:border-indigo-500 text-sm transition-all"
+                                        className="w-full bg-[var(--color-background)] border border-[#E2E8F0] rounded-xl py-3 px-4 focus:outline-none focus:border-indigo-500 text-sm transition-all"
                                         value={formData.classId}
                                         onChange={handleInputChange}
                                     >
@@ -229,11 +229,11 @@ const TeacherAssignments = () => {
                                 </div>
 
                                 <div className="space-y-1.5">
-                                    <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest pl-1">Assignment Title</label>
+                                    <label className="text-[10px] font-bold text-[var(--color-secondary-slate)] uppercase tracking-widest pl-1">Assignment Title</label>
                                     <input
                                         name="title"
                                         required
-                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl py-3 px-4 focus:outline-none focus:border-indigo-500 text-sm transition-all"
+                                        className="w-full bg-[var(--color-background)] border border-[#E2E8F0] rounded-xl py-3 px-4 focus:outline-none focus:border-indigo-500 text-sm transition-all"
                                         placeholder="e.g. Lab Report 1: Optics"
                                         value={formData.title}
                                         onChange={handleInputChange}
@@ -241,12 +241,12 @@ const TeacherAssignments = () => {
                                 </div>
 
                                 <div className="space-y-1.5">
-                                    <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest pl-1">Instructions</label>
+                                    <label className="text-[10px] font-bold text-[var(--color-secondary-slate)] uppercase tracking-widest pl-1">Instructions</label>
                                     <textarea
                                         name="description"
                                         rows="4"
                                         required
-                                        className="w-full bg-slate-950 border border-slate-800 rounded-xl py-3 px-4 focus:outline-none focus:border-indigo-500 text-sm transition-all resize-none"
+                                        className="w-full bg-[var(--color-background)] border border-[#E2E8F0] rounded-xl py-3 px-4 focus:outline-none focus:border-indigo-500 text-sm transition-all resize-none"
                                         placeholder="Detail the tasks and objectives..."
                                         value={formData.description}
                                         onChange={handleInputChange}
@@ -255,23 +255,23 @@ const TeacherAssignments = () => {
 
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="space-y-1.5">
-                                        <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest pl-1">Deadline</label>
+                                        <label className="text-[10px] font-bold text-[var(--color-secondary-slate)] uppercase tracking-widest pl-1">Deadline</label>
                                         <input
                                             name="dueDate"
                                             type="datetime-local"
                                             required
-                                            className="w-full bg-slate-950 border border-slate-800 rounded-xl py-3 px-4 focus:outline-none focus:border-indigo-500 text-sm transition-all text-white"
+                                            className="w-full bg-[var(--color-background)] border border-[#E2E8F0] rounded-xl py-3 px-4 focus:outline-none focus:border-indigo-500 text-sm transition-all text-[var(--color-primary-navy)]"
                                             value={formData.dueDate}
                                             onChange={handleInputChange}
                                         />
                                     </div>
                                     <div className="space-y-1.5">
-                                        <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest pl-1">Max Points</label>
+                                        <label className="text-[10px] font-bold text-[var(--color-secondary-slate)] uppercase tracking-widest pl-1">Max Points</label>
                                         <input
                                             name="points"
                                             type="number"
                                             required
-                                            className="w-full bg-slate-950 border border-slate-800 rounded-xl py-3 px-4 focus:outline-none focus:border-indigo-500 text-sm transition-all"
+                                            className="w-full bg-[var(--color-background)] border border-[#E2E8F0] rounded-xl py-3 px-4 focus:outline-none focus:border-indigo-500 text-sm transition-all"
                                             value={formData.points}
                                             onChange={handleInputChange}
                                         />

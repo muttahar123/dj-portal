@@ -61,8 +61,8 @@ const Profile = () => {
                         <User className="w-8 h-8 text-purple-400" />
                     </div>
                     <div>
-                        <h1 className="text-3xl font-bold text-white">My Profile</h1>
-                        <p className="text-slate-400 mt-1">Update your personal information</p>
+                        <h1 className="text-3xl font-bold text-[var(--color-primary-navy)]">My Profile</h1>
+                        <p className="text-[var(--color-secondary-slate)] mt-1">Update your personal information</p>
                     </div>
                 </div>
 
@@ -70,18 +70,18 @@ const Profile = () => {
                 <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="bg-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-800 p-8 shadow-xl"
+                    className="bg-[var(--color-surface-default)] shadow-sm backdrop-blur-xl rounded-2xl border border-[#E2E8F0] p-8 shadow-xl"
                 >
                     {/* User Info Display */}
-                    <div className="mb-8 pb-6 border-b border-slate-800">
+                    <div className="mb-8 pb-6 border-b border-[#E2E8F0]">
                         <div className="flex items-center gap-4">
-                            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-2xl font-bold text-white">
+                            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-2xl font-bold text-[var(--color-primary-navy)]">
                                 {user?.name?.charAt(0)?.toUpperCase() || 'U'}
                             </div>
                             <div>
-                                <h2 className="text-xl font-semibold text-white">{user?.name}</h2>
-                                <p className="text-slate-400">{user?.email}</p>
-                                <span className="inline-block mt-2 px-3 py-1 text-xs font-medium rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30">
+                                <h2 className="text-xl font-semibold text-[var(--color-primary-navy)]">{user?.name}</h2>
+                                <p className="text-[var(--color-secondary-slate)]">{user?.email}</p>
+                                <span className="inline-block mt-2 px-3 py-1 text-xs font-medium rounded-full bg-blue-500/20 text-[var(--color-tertiary-sage)] border border-blue-500/30">
                                     {user?.role}
                                 </span>
                             </div>
@@ -91,7 +91,7 @@ const Profile = () => {
                     <form onSubmit={handleSubmit} className="space-y-6">
                         {/* Name Field */}
                         <div>
-                            <label className="block text-sm font-medium text-slate-300 mb-2">
+                            <label className="block text-sm font-medium text-[var(--color-primary-navy)] mb-2">
                                 <User className="w-4 h-4 inline mr-2" />
                                 Full Name
                             </label>
@@ -99,13 +99,13 @@ const Profile = () => {
                                 type="text"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
-                                className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                                className="w-full px-4 py-3 bg-[var(--color-background)] border border-[#E2E8F0] rounded-xl text-[var(--color-primary-navy)] placeholder-slate-500 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
                             />
                         </div>
 
                         {/* Password Field */}
                         <div>
-                            <label className="block text-sm font-medium text-slate-300 mb-2">
+                            <label className="block text-sm font-medium text-[var(--color-primary-navy)] mb-2">
                                 <Lock className="w-4 h-4 inline mr-2" />
                                 New Password
                             </label>
@@ -114,13 +114,13 @@ const Profile = () => {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="Leave blank to keep current password"
-                                className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                                className="w-full px-4 py-3 bg-[var(--color-background)] border border-[#E2E8F0] rounded-xl text-[var(--color-primary-navy)] placeholder-slate-500 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
                             />
                         </div>
 
                         {/* Confirm Password Field */}
                         <div>
-                            <label className="block text-sm font-medium text-slate-300 mb-2">
+                            <label className="block text-sm font-medium text-[var(--color-primary-navy)] mb-2">
                                 <Lock className="w-4 h-4 inline mr-2" />
                                 Confirm New Password
                             </label>
@@ -129,7 +129,7 @@ const Profile = () => {
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 placeholder="Confirm your new password"
-                                className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                                className="w-full px-4 py-3 bg-[var(--color-background)] border border-[#E2E8F0] rounded-xl text-[var(--color-primary-navy)] placeholder-slate-500 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
                             />
                         </div>
 
@@ -137,7 +137,7 @@ const Profile = () => {
                         <button
                             type="submit"
                             disabled={saving}
-                            className="w-full px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-500 text-white font-medium rounded-xl hover:from-purple-500 hover:to-purple-400 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-purple-500/25"
+                            className="w-full px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-500 text-[var(--color-primary-navy)] font-medium rounded-xl hover:from-purple-500 hover:to-purple-400 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-purple-500/25"
                         >
                             {saving ? (
                                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />

@@ -8,7 +8,7 @@ const StatsCard = ({ title, value, icon: Icon, color }) => (
         className="bg-[var(--color-surface-default)] border border-[#E2E8F0] p-6 rounded-[var(--radius-default)] flex items-center gap-4 hover:shadow-[var(--shadow-md)] transition-shadow shadow-[var(--shadow-default)]"
     >
         <div className={`w-12 h-12 rounded-[var(--radius-default)] flex items-center justify-center ${color}`}>
-            <Icon className="w-6 h-6 text-white" />
+            <Icon className="w-6 h-6 text-[var(--color-primary-navy)]" />
         </div>
         <div>
             <h3 className="text-[var(--color-secondary-slate)] text-sm font-medium tracking-wide">{title}</h3>

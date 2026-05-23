@@ -61,8 +61,8 @@ const Announcements = () => {
                         <Megaphone className="w-8 h-8 text-amber-400" />
                     </div>
                     <div>
-                        <h1 className="text-3xl font-bold text-white">Announcements</h1>
-                        <p className="text-slate-400 mt-1">Post important notices for all users</p>
+                        <h1 className="text-3xl font-bold text-[var(--color-primary-navy)]">Announcements</h1>
+                        <p className="text-[var(--color-secondary-slate)] mt-1">Post important notices for all users</p>
                     </div>
                 </div>
 
@@ -70,37 +70,37 @@ const Announcements = () => {
                 <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="bg-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-800 p-6 mb-8 shadow-xl"
+                    className="bg-[var(--color-surface-default)] shadow-sm backdrop-blur-xl rounded-2xl border border-[#E2E8F0] p-6 mb-8 shadow-xl"
                 >
-                    <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
-                        <Send className="w-5 h-5 text-blue-400" />
+                    <h2 className="text-xl font-semibold text-[var(--color-primary-navy)] mb-4 flex items-center gap-2">
+                        <Send className="w-5 h-5 text-[var(--color-tertiary-sage)]" />
                         New Announcement
                     </h2>
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div>
-                            <label className="block text-sm font-medium text-slate-300 mb-2">Title</label>
+                            <label className="block text-sm font-medium text-[var(--color-primary-navy)] mb-2">Title</label>
                             <input
                                 type="text"
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
                                 placeholder="Announcement title..."
-                                className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                                className="w-full px-4 py-3 bg-[var(--color-background)] border border-[#E2E8F0] rounded-xl text-[var(--color-primary-navy)] placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-slate-300 mb-2">Content</label>
+                            <label className="block text-sm font-medium text-[var(--color-primary-navy)] mb-2">Content</label>
                             <textarea
                                 value={content}
                                 onChange={(e) => setContent(e.target.value)}
                                 placeholder="Write your announcement here..."
                                 rows={4}
-                                className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all resize-none"
+                                className="w-full px-4 py-3 bg-[var(--color-background)] border border-[#E2E8F0] rounded-xl text-[var(--color-primary-navy)] placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all resize-none"
                             />
                         </div>
                         <button
                             type="submit"
                             disabled={submitting}
-                            className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-medium rounded-xl hover:from-blue-500 hover:to-blue-400 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25"
+                            className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-[var(--color-primary-navy)] font-medium rounded-xl hover:from-blue-500 hover:to-blue-400 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25"
                         >
                             {submitting ? (
                                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -116,7 +116,7 @@ const Announcements = () => {
 
                 {/* Announcements List */}
                 <div className="space-y-4">
-                    <h2 className="text-xl font-semibold text-white mb-4">Recent Announcements</h2>
+                    <h2 className="text-xl font-semibold text-[var(--color-primary-navy)] mb-4">Recent Announcements</h2>
 
                     {loading ? (
                         <div className="flex items-center justify-center py-12">
@@ -126,10 +126,10 @@ const Announcements = () => {
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            className="text-center py-12 bg-slate-900/30 rounded-2xl border border-slate-800"
+                            className="text-center py-12 bg-[var(--color-surface-default)]/30 rounded-2xl border border-[#E2E8F0]"
                         >
                             <AlertCircle className="w-12 h-12 text-slate-600 mx-auto mb-3" />
-                            <p className="text-slate-400">No announcements yet</p>
+                            <p className="text-[var(--color-secondary-slate)]">No announcements yet</p>
                         </motion.div>
                     ) : (
                         <AnimatePresence>
@@ -140,11 +140,11 @@ const Announcements = () => {
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -20 }}
                                     transition={{ delay: index * 0.05 }}
-                                    className="bg-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-800 p-6 hover:border-slate-700 transition-all"
+                                    className="bg-[var(--color-surface-default)] shadow-sm backdrop-blur-xl rounded-2xl border border-[#E2E8F0] p-6 hover:border-[#E2E8F0] transition-all"
                                 >
-                                    <h3 className="text-lg font-semibold text-white mb-2">{announcement.title}</h3>
-                                    <p className="text-slate-300 mb-4 whitespace-pre-wrap">{announcement.content}</p>
-                                    <div className="flex items-center gap-4 text-sm text-slate-500">
+                                    <h3 className="text-lg font-semibold text-[var(--color-primary-navy)] mb-2">{announcement.title}</h3>
+                                    <p className="text-[var(--color-primary-navy)] mb-4 whitespace-pre-wrap">{announcement.content}</p>
+                                    <div className="flex items-center gap-4 text-sm text-[var(--color-secondary-slate)]">
                                         <span className="flex items-center gap-1">
                                             <User className="w-4 h-4" />
                                             {announcement.createdBy?.name || 'Admin'}
