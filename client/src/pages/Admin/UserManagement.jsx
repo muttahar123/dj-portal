@@ -209,7 +209,7 @@ const UserManagement = () => {
                                 <tr key={user._id} className="hover:bg-[#F1F5F9] transition-colors">
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-slate-700 to-slate-800 flex items-center justify-center text-[var(--color-primary-navy)] font-bold border border-[#E2E8F0] uppercase">
+                                            <div className="w-10 h-10 rounded-full bg-[var(--color-tertiary-blue)] flex items-center justify-center text-white font-bold uppercase">
                                                 {user.name.charAt(0)}
                                             </div>
                                             <div>

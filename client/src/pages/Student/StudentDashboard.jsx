@@ -105,7 +105,7 @@ const StudentDashboard = () => {
                         <div className="p-4 bg-[var(--color-background)] rounded-[var(--radius-default)] border border-[#E2E8F0] text-sm text-[var(--color-secondary-slate)] leading-relaxed italic">
                             "Education is the most powerful weapon which you can use to change the world."
                         </div>
-                        <Link to="/dashboard/student/attendance" className="block text-center py-4 bg-[var(--color-primary-navy)] hover:bg-[#020617] rounded-[var(--radius-default)] font-bold text-[var(--color-primary-navy)] transition-all shadow-sm">
+                        <Link to="/dashboard/student/attendance" className="block text-center py-4 bg-[var(--color-primary-navy)] hover:bg-[#020617] rounded-[var(--radius-default)] font-bold text-white transition-all shadow-sm">
                             View Detailed History
                         </Link>
                     </div>

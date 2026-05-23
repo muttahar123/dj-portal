@@ -74,7 +74,7 @@ const TeacherDashboard = () => {
                                 </div>
                                 <Link
                                     to="/dashboard/attendance"
-                                    className="p-3 bg-[var(--color-surface-default)] border border-[#E2E8F0] rounded-[var(--radius-default)] text-[var(--color-secondary-slate)] group-hover:bg-[var(--color-primary-navy)] group-hover:text-[var(--color-primary-navy)] group-hover:border-[var(--color-primary-navy)] transition-all shadow-sm"
+                                    className="p-3 bg-[var(--color-surface-default)] border border-[#E2E8F0] rounded-[var(--radius-default)] text-[var(--color-secondary-slate)] group-hover:bg-[var(--color-primary-navy)] group-hover:text-white group-hover:border-[var(--color-primary-navy)] transition-all shadow-sm"
                                     title="Mark Attendance"
                                 >
                                     <ArrowRight className="w-5 h-5" />

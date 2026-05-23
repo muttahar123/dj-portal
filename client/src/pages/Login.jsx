@@ -76,7 +76,7 @@ const Login = () => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-[var(--color-primary-navy)] hover:bg-[#020617] text-[var(--color-primary-navy)] font-semibold py-3 rounded-[var(--radius-default)] transition-all shadow-sm active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                        className="w-full bg-[var(--color-primary-navy)] hover:bg-[#020617] text-white font-semibold py-3 rounded-[var(--radius-default)] transition-all shadow-sm active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
                         {loading && <Loader2 className="w-5 h-5 animate-spin" />}
                         {loading ? 'Signing in...' : 'Sign In'}

@@ -23,7 +23,7 @@ const SidebarLink = ({ to, icon: Icon, label, end = false }) => (
       flex items-center gap-3 px-4 py-3 rounded-[var(--radius-default)] transition-all duration-200 group
       ${isActive
                 ? 'bg-[var(--color-tertiary-blue)]/10 text-[var(--color-tertiary-blue)] font-semibold'
-                : 'text-[var(--color-secondary-slate)] hover:bg-[#F1F5F9] hover:text-[var(--color-primary-navy)]'}
+                : 'text-[var(--color-secondary-slate)] hover:bg-[#F1F5F9] hover:text-white'}
     `}
     >
         {({ isActive }) => (

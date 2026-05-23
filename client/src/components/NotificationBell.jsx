@@ -80,7 +80,7 @@ const NotificationBell = ({ token }) => {
                     <motion.span
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
-                        className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full text-xs text-[var(--color-primary-navy)] flex items-center justify-center font-medium"
+                        className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full text-xs text-white flex items-center justify-center font-medium"
                     >
                         {unreadCount > 9 ? '9+' : unreadCount}
                     </motion.span>

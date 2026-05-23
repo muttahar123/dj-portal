@@ -31,7 +31,7 @@ const Settings = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {/* Sidebar Navigation for Settings */}
                 <div className="space-y-2">
-                    <button className="w-full flex items-center gap-3 px-4 py-3 bg-[var(--color-primary-navy)] text-white text-[var(--color-primary-navy)] rounded-2xl shadow-lg shadow-blue-600/20 font-bold transition-all">
+                    <button className="w-full flex items-center gap-3 px-4 py-3 bg-[var(--color-primary-navy)] text-white text-white rounded-2xl shadow-lg shadow-blue-600/20 font-bold transition-all">
                         <User className="w-5 h-5" />
                         My Profile
                     </button>

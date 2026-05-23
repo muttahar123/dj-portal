@@ -96,7 +96,7 @@ const AdminDashboard = () => {
                     </div>
                     <h2 className="text-xl font-bold mb-6 text-[var(--color-primary-navy)] font-headline">Access Control</h2>
                     <div className="space-y-4">
-                        <Link to="/dashboard/users" className="flex items-center justify-between p-4 bg-[var(--color-primary-navy)] hover:bg-[#020617] text-[var(--color-primary-navy)] rounded-[var(--radius-default)] transition-all shadow-sm group">
+                        <Link to="/dashboard/users" className="flex items-center justify-between p-4 bg-[var(--color-primary-navy)] hover:bg-[#020617] text-white rounded-[var(--radius-default)] transition-all shadow-sm group">
                             <span className="font-bold">Register User</span>
                             <Users className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </Link>

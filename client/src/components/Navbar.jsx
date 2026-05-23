@@ -43,7 +43,7 @@ const Navbar = ({ toggleSidebar }) => {
                             <span className="font-semibold text-[var(--color-primary-navy)]">{user?.name}</span>
                             <span className="text-xs text-[var(--color-secondary-slate)] font-medium tracking-wide">{user?.role}</span>
                         </div>
-                        <div className="w-10 h-10 rounded-[var(--radius-full)] bg-[var(--color-tertiary-blue)] flex items-center justify-center shadow-sm overflow-hidden capitalize text-[var(--color-primary-navy)] font-bold">
+                        <div className="w-10 h-10 rounded-[var(--radius-full)] bg-[var(--color-tertiary-blue)] flex items-center justify-center shadow-sm overflow-hidden capitalize text-white font-bold">
                             {user?.name?.charAt(0) || <UserIcon className="w-5 h-5" />}
                         </div>
                         <button
