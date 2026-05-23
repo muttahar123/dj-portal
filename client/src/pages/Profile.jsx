@@ -81,7 +81,7 @@ const Profile = () => {
                             <div>
                                 <h2 className="text-xl font-semibold text-[var(--color-primary-navy)]">{user?.name}</h2>
                                 <p className="text-[var(--color-secondary-slate)]">{user?.email}</p>
-                                <span className="inline-block mt-2 px-3 py-1 text-xs font-medium rounded-full bg-blue-500/20 text-[var(--color-tertiary-sage)] border border-blue-500/30">
+                                <span className="inline-block mt-2 px-3 py-1 text-xs font-medium rounded-full bg-blue-500/20 text-[var(--color-tertiary-blue)] border border-blue-500/30">
                                     {user?.role}
                                 </span>
                             </div>

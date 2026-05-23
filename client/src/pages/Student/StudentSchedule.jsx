@@ -38,7 +38,7 @@ const StudentSchedule = () => {
         <div className="space-y-6">
             <div>
                 <h1 className="text-2xl font-bold text-[var(--color-primary-navy)] flex items-center gap-2">
-                    <Calendar className="w-6 h-6 text-[var(--color-tertiary-sage)]" />
+                    <Calendar className="w-6 h-6 text-[var(--color-tertiary-blue)]" />
                     Academic Schedule
                 </h1>
                 <p className="text-[var(--color-secondary-slate)] text-sm mt-1">Weekly timetable for your enrolled laboratory sessions and classes.</p>
@@ -68,13 +68,13 @@ const StudentSchedule = () => {
                                             <div key={idx} className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-[var(--color-background)] border border-[#E2E8F0]/10 transition-colors">
                                                 <div className="flex gap-4 items-start">
                                                     <div className="w-12 h-12 rounded-2xl bg-[var(--color-background)] flex flex-col items-center justify-center border border-[#E2E8F0]">
-                                                        <Clock className="w-4 h-4 text-[var(--color-tertiary-sage)] mb-1" />
+                                                        <Clock className="w-4 h-4 text-[var(--color-tertiary-blue)] mb-1" />
                                                         <span className="text-[8px] text-[var(--color-secondary-slate)] font-bold uppercase">{item.startTime}</span>
                                                     </div>
                                                     <div>
                                                         <h3 className="text-[var(--color-primary-navy)] font-bold text-lg">{item.className}</h3>
                                                         <div className="flex items-center gap-3 mt-1">
-                                                            <span className="text-[10px] bg-blue-500/10 text-[var(--color-tertiary-sage)] px-2 py-0.5 rounded border border-blue-500/20 font-bold uppercase">{item.classCode}</span>
+                                                            <span className="text-[10px] bg-blue-500/10 text-[var(--color-tertiary-blue)] px-2 py-0.5 rounded border border-blue-500/20 font-bold uppercase">{item.classCode}</span>
                                                             <div className="flex items-center gap-1 text-xs text-[var(--color-secondary-slate)]">
                                                                 <User className="w-3 h-3" />
                                                                 <span>Prof. {item.teacherName}</span>
@@ -88,7 +88,7 @@ const StudentSchedule = () => {
                                                         <div className="text-sm text-[var(--color-primary-navy)] font-medium">{item.startTime} — {item.endTime}</div>
                                                     </div>
                                                     <div className="bg-[var(--color-background)] px-4 py-2 rounded-xl border border-[#E2E8F0] flex items-center gap-2">
-                                                        <MapPin className="w-3.5 h-3.5 text-[var(--color-tertiary-sage)]" />
+                                                        <MapPin className="w-3.5 h-3.5 text-[var(--color-tertiary-blue)]" />
                                                         <span className="text-xs text-[var(--color-primary-navy)] font-bold">{item.room || 'TBA'}</span>
                                                     </div>
                                                 </div>

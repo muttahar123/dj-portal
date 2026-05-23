@@ -63,7 +63,7 @@ const AuditLogs = () => {
                     </table>
                 </div>
                 <div className="p-6 bg-[var(--color-background)]/20 text-center border-t border-[#E2E8F0]">
-                    <button className="text-xs text-[var(--color-secondary-slate)] hover:text-[var(--color-tertiary-sage)] transition-colors font-bold uppercase tracking-widest">
+                    <button className="text-xs text-[var(--color-secondary-slate)] hover:text-[var(--color-tertiary-blue)] transition-colors font-bold uppercase tracking-widest">
                         Export Full Report (CSV)
                     </button>
                 </div>

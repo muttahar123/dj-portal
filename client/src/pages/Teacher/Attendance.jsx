@@ -278,7 +278,7 @@ const Attendance = () => {
                     ) : (
                         <>
                             <div className="relative group mb-4">
-                                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-secondary-slate)] group-focus-within:text-[var(--color-tertiary-sage)] transition-colors" />
+                                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-secondary-slate)] group-focus-within:text-[var(--color-tertiary-blue)] transition-colors" />
                                 <input
                                     type="text"
                                     placeholder="Quick search by name or ID..."

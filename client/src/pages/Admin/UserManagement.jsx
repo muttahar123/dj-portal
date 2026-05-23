@@ -137,7 +137,7 @@ const UserManagement = () => {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-2xl font-bold text-[var(--color-primary-navy)] flex items-center gap-2">
-                        <Users className="w-6 h-6 text-[var(--color-tertiary-sage)]" />
+                        <Users className="w-6 h-6 text-[var(--color-tertiary-blue)]" />
                         User Management
                     </h1>
                     <p className="text-[var(--color-secondary-slate)] text-sm mt-1">Manage institutional access and roles.</p>
@@ -154,7 +154,7 @@ const UserManagement = () => {
             {/* Filters & Search */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-[var(--color-surface-default)] shadow-sm p-4 rounded-2xl border border-[#E2E8F0]">
                 <div className="relative group">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-secondary-slate)] group-focus-within:text-[var(--color-tertiary-sage)] transition-colors" />
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-secondary-slate)] group-focus-within:text-[var(--color-tertiary-blue)] transition-colors" />
                     <input
                         type="text"
                         placeholder="Search by name or email..."
@@ -220,7 +220,7 @@ const UserManagement = () => {
                                     </td>
                                     <td className="px-6 py-4">
                                         <span className={`px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase ${user.role === 'ADMIN' ? 'bg-purple-500/10 text-purple-400 border border-purple-500/20' :
-                                            user.role === 'TEACHER' ? 'bg-blue-500/10 text-[var(--color-tertiary-sage)] border border-blue-500/20' :
+                                            user.role === 'TEACHER' ? 'bg-blue-500/10 text-[var(--color-tertiary-blue)] border border-blue-500/20' :
                                                 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
                                             }`}>
                                             {user.role}
@@ -237,7 +237,7 @@ const UserManagement = () => {
                                         <div className="flex items-center justify-end gap-2">
                                             <button
                                                 onClick={() => openEditModal(user)}
-                                                className="p-2 hover:bg-blue-500/20 rounded-lg text-[var(--color-secondary-slate)] hover:text-[var(--color-tertiary-sage)] transition-all"
+                                                className="p-2 hover:bg-blue-500/20 rounded-lg text-[var(--color-secondary-slate)] hover:text-[var(--color-tertiary-blue)] transition-all"
                                                 title="Edit User"
                                             >
                                                 <Edit2 className="w-4 h-4" />
@@ -266,7 +266,7 @@ const UserManagement = () => {
                         <div className="p-8">
                             <div className="flex justify-between items-center mb-6">
                                 <h2 className="text-2xl font-bold text-[var(--color-primary-navy)] flex items-center gap-2">
-                                    {editingUser ? <Edit2 className="text-[var(--color-tertiary-sage)]" /> : <UserPlus className="text-[var(--color-tertiary-sage)]" />}
+                                    {editingUser ? <Edit2 className="text-[var(--color-tertiary-blue)]" /> : <UserPlus className="text-[var(--color-tertiary-blue)]" />}
                                     {editingUser ? 'Edit User' : 'Register New User'}
                                 </h2>
                                 <button onClick={closeModal} className="text-[var(--color-secondary-slate)] hover:text-[var(--color-primary-navy)] transition-colors">

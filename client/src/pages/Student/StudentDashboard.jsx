@@ -43,7 +43,7 @@ const StudentDashboard = () => {
                     <p className="text-[var(--color-secondary-slate)] mt-1 tracking-wide">Unified view of your academic progress and deadlines.</p>
                 </div>
                 <Link to="/dashboard/schedule" className="bg-[var(--color-surface-default)] border border-[#E2E8F0] hover:bg-[#F1F5F9] text-[var(--color-primary-navy)] px-5 py-3 rounded-[var(--radius-default)] font-bold transition-all shadow-sm flex items-center gap-2">
-                    <Calendar className="w-5 h-5 text-[var(--color-tertiary-sage)]" />
+                    <Calendar className="w-5 h-5 text-[var(--color-tertiary-blue)]" />
                     View Lab Schedule
                 </Link>
             </div>
@@ -56,7 +56,7 @@ const StudentDashboard = () => {
                     <StatsCard title="Attendance" value={`${percentage}%`} icon={ClipboardCheck} color="bg-[var(--color-primary-navy)]" />
                 </Link>
                 <Link to="/dashboard/schedule" className="block transform transition-all hover:scale-[1.02]">
-                    <StatsCard title="Active Courses" value="4" icon={Book} color="bg-[var(--color-tertiary-sage)]" />
+                    <StatsCard title="Active Courses" value="4" icon={Book} color="bg-[var(--color-tertiary-blue)]" />
                 </Link>
                 <StatsCard title="Performance" value="A+" icon={Activity} color="bg-[var(--color-success)]" />
             </div>
@@ -89,7 +89,7 @@ const StudentDashboard = () => {
 
                 <div className="bg-[var(--color-surface-default)] border border-[#E2E8F0] shadow-[var(--shadow-default)] rounded-[var(--radius-lg)] p-8 relative overflow-hidden">
                     <h2 className="text-xl font-bold mb-8 flex items-center gap-2 text-[var(--color-primary-navy)] font-headline">
-                        <Activity className="text-[var(--color-tertiary-sage)]" />
+                        <Activity className="text-[var(--color-tertiary-blue)]" />
                         Academic Stance
                     </h2>
                     <div className="space-y-6">

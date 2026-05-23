@@ -49,7 +49,7 @@ const TeacherDashboard = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <StatsCard title="Assigned Classes" value={classesData?.length || 0} icon={BookOpen} color="bg-[var(--color-primary-navy)]" />
-                <StatsCard title="Total Students" value={totalStudents} icon={Users} color="bg-[var(--color-tertiary-sage)]" />
+                <StatsCard title="Total Students" value={totalStudents} icon={Users} color="bg-[var(--color-tertiary-blue)]" />
                 <StatsCard title="Active Assignments" value={assignmentsData?.length || 0} icon={FileText} color="bg-[var(--color-secondary-slate)]" />
                 <StatsCard title="Days Present" value="24/24" icon={Calendar} color="bg-[var(--color-primary-navy)]" />
             </div>
@@ -57,7 +57,7 @@ const TeacherDashboard = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div className="lg:col-span-2 bg-[var(--color-surface-default)] border border-[#E2E8F0] shadow-[var(--shadow-default)] rounded-[var(--radius-lg)] p-8">
                     <h2 className="text-xl font-bold mb-8 flex items-center gap-2 text-[var(--color-primary-navy)] font-headline">
-                        <BookOpen className="text-[var(--color-tertiary-sage)]" />
+                        <BookOpen className="text-[var(--color-tertiary-blue)]" />
                         Classroom Matrix
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -66,7 +66,7 @@ const TeacherDashboard = () => {
                         ) : classesData?.map((cls) => (
                             <div key={cls._id} className="bg-[var(--color-background)] border border-[#E2E8F0] p-5 rounded-[var(--radius-default)] group hover:border-[var(--color-primary-navy)] hover:shadow-[var(--shadow-sm)] transition-all flex justify-between items-center">
                                 <div>
-                                    <div className="text-xs font-black text-[var(--color-tertiary-sage)] mb-1 tracking-widest">{cls.code}</div>
+                                    <div className="text-xs font-black text-[var(--color-tertiary-blue)] mb-1 tracking-widest">{cls.code}</div>
                                     <h3 className="text-[var(--color-primary-navy)] font-bold font-headline">{cls.name}</h3>
                                     <div className="text-[10px] text-[var(--color-secondary-slate)] font-bold mt-1 uppercase tracking-tighter">
                                         {cls.students?.length} Students Enrolled
@@ -86,7 +86,7 @@ const TeacherDashboard = () => {
 
                 <div className="bg-[var(--color-surface-default)] border border-[#E2E8F0] shadow-[var(--shadow-default)] rounded-[var(--radius-lg)] p-8">
                     <h2 className="text-xl font-bold mb-8 flex items-center gap-2 text-[var(--color-primary-navy)] font-headline">
-                        <FileText className="text-[var(--color-tertiary-sage)]" />
+                        <FileText className="text-[var(--color-tertiary-blue)]" />
                         Recent Tasks
                     </h2>
                     <div className="space-y-4">
@@ -97,7 +97,7 @@ const TeacherDashboard = () => {
                                     <span className="text-[10px] bg-[var(--color-surface-default)] border border-[#E2E8F0] px-2 py-1 rounded-[var(--radius-sm)] text-[var(--color-secondary-slate)] font-bold uppercase tracking-widest">
                                         {task.class?.code}
                                     </span>
-                                    <Link to="/dashboard/assignments" className="text-[10px] text-[var(--color-tertiary-sage)] font-bold hover:underline">Manage</Link>
+                                    <Link to="/dashboard/assignments" className="text-[10px] text-[var(--color-tertiary-blue)] font-bold hover:underline">Manage</Link>
                                 </div>
                             </div>
                         ))}

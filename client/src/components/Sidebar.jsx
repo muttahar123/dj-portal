@@ -22,7 +22,7 @@ const SidebarLink = ({ to, icon: Icon, label, end = false }) => (
         className={({ isActive }) => `
       flex items-center gap-3 px-4 py-3 rounded-[var(--radius-default)] transition-all duration-200 group
       ${isActive
-                ? 'bg-[var(--color-tertiary-sage)]/10 text-[var(--color-tertiary-sage)] font-semibold'
+                ? 'bg-[var(--color-tertiary-blue)]/10 text-[var(--color-tertiary-blue)] font-semibold'
                 : 'text-[var(--color-secondary-slate)] hover:bg-[#F1F5F9] hover:text-[var(--color-primary-navy)]'}
     `}
     >
@@ -31,7 +31,7 @@ const SidebarLink = ({ to, icon: Icon, label, end = false }) => (
                 <Icon className="w-5 h-5 transition-transform group-hover:scale-110" />
                 <span className={isActive ? 'font-semibold' : 'font-medium'}>{label}</span>
                 {isActive && (
-                    <div className="ml-auto w-1.5 h-1.5 rounded-[var(--radius-full)] bg-[var(--color-tertiary-sage)]" />
+                    <div className="ml-auto w-1.5 h-1.5 rounded-[var(--radius-full)] bg-[var(--color-tertiary-blue)]" />
                 )}
             </>
         )}

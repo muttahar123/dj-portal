@@ -49,7 +49,7 @@ const Settings = () => {
                 <div className="md:col-span-2 space-y-6">
                     <div className="bg-[var(--color-surface-default)] shadow-sm border border-[#E2E8F0] rounded-3xl p-8 shadow-2xl backdrop-blur-md">
                         <h2 className="text-xl font-bold mb-8 flex items-center gap-2">
-                            <Shield className="w-5 h-5 text-[var(--color-tertiary-sage)]" />
+                            <Shield className="w-5 h-5 text-[var(--color-tertiary-blue)]" />
                             Personal Information
                         </h2>
 
@@ -71,7 +71,7 @@ const Settings = () => {
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="flex flex-col gap-2">
                                     <label className="text-[10px] font-bold text-[var(--color-secondary-slate)] uppercase tracking-widest pl-1">Portal Role</label>
-                                    <div className="bg-[var(--color-background)] border border-[#E2E8F0] px-5 py-4 rounded-2xl text-[var(--color-tertiary-sage)] font-bold text-sm uppercase tracking-tighter">
+                                    <div className="bg-[var(--color-background)] border border-[#E2E8F0] px-5 py-4 rounded-2xl text-[var(--color-tertiary-blue)] font-bold text-sm uppercase tracking-tighter">
                                         {user?.role}
                                     </div>
                                 </div>

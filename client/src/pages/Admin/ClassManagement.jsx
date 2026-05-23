@@ -162,7 +162,7 @@ const ClassManagement = () => {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-2xl font-bold text-[var(--color-primary-navy)] flex items-center gap-2">
-                        <BookOpen className="w-6 h-6 text-[var(--color-tertiary-sage)]" />
+                        <BookOpen className="w-6 h-6 text-[var(--color-tertiary-blue)]" />
                         Class Management
                     </h1>
                     <p className="text-[var(--color-secondary-slate)] text-sm mt-1">Configure academic classes, schedules, and enrollments.</p>
@@ -190,7 +190,7 @@ const ClassManagement = () => {
                     {classes?.map((cls) => (
                         <div key={cls._id} className="bg-[var(--color-surface-default)] shadow-sm backdrop-blur-md border border-[#E2E8F0] rounded-3xl p-6 hover:border-[#E2E8F0] transition-all group shadow-xl">
                             <div className="flex justify-between items-start mb-4">
-                                <div className="w-12 h-12 rounded-2xl bg-[var(--color-primary-navy)] text-white/10 flex items-center justify-center text-[var(--color-tertiary-sage)]">
+                                <div className="w-12 h-12 rounded-2xl bg-[var(--color-primary-navy)] text-white/10 flex items-center justify-center text-[var(--color-tertiary-blue)]">
                                     <BookOpen className="w-6 h-6" />
                                 </div>
                                 <div className="text-xs font-mono text-[var(--color-secondary-slate)] bg-[var(--color-background)] px-2 py-1 rounded tracking-widest">{cls.code}</div>
@@ -204,7 +204,7 @@ const ClassManagement = () => {
                             <div className="space-y-3 mb-6">
                                 {cls.schedule?.map((item, idx) => (
                                     <div key={idx} className="flex items-center gap-3 text-xs text-[var(--color-secondary-slate)] bg-[var(--color-background)] p-2.5 rounded-xl border border-[#E2E8F0]/50">
-                                        <Calendar className="w-3.5 h-3.5 text-[var(--color-tertiary-sage)]" />
+                                        <Calendar className="w-3.5 h-3.5 text-[var(--color-tertiary-blue)]" />
                                         <span className="font-semibold text-[var(--color-secondary-slate)] uppercase tracking-tighter w-16">{item.day}</span>
                                         <Clock className="w-3.5 h-3.5 ml-1 text-slate-600" />
                                         <span className="text-[var(--color-primary-navy)] font-medium">{item.startTime} - {item.endTime}</span>
@@ -224,7 +224,7 @@ const ClassManagement = () => {
                                 <div className="flex items-center gap-1">
                                     <button
                                         onClick={() => openEditModal(cls)}
-                                        className="text-[var(--color-secondary-slate)] hover:text-[var(--color-tertiary-sage)] transition-colors p-1.5 hover:bg-blue-500/10 rounded-lg"
+                                        className="text-[var(--color-secondary-slate)] hover:text-[var(--color-tertiary-blue)] transition-colors p-1.5 hover:bg-blue-500/10 rounded-lg"
                                     >
                                         <Edit3 className="w-4 h-4" />
                                     </button>
@@ -249,7 +249,7 @@ const ClassManagement = () => {
                         <div className="p-8 overflow-y-auto scrollbar-hide">
                             <div className="flex justify-between items-center mb-6">
                                 <h2 className="text-2xl font-bold text-[var(--color-primary-navy)] flex items-center gap-2">
-                                    {editingClass ? <Edit3 className="text-[var(--color-tertiary-sage)]" /> : <Plus className="text-[var(--color-tertiary-sage)]" />}
+                                    {editingClass ? <Edit3 className="text-[var(--color-tertiary-blue)]" /> : <Plus className="text-[var(--color-tertiary-blue)]" />}
                                     {editingClass ? 'Edit Class' : 'Configure New Class'}
                                 </h2>
                                 <button onClick={closeModal} className="text-[var(--color-secondary-slate)] hover:text-[var(--color-primary-navy)] transition-colors p-2 hover:bg-[var(--color-background)] border border-[#E2E8F0] rounded-lg">
@@ -306,7 +306,7 @@ const ClassManagement = () => {
                                         <button
                                             type="button"
                                             onClick={addScheduleItem}
-                                            className="text-[10px] font-bold text-[var(--color-tertiary-sage)] hover:text-blue-300 transition-colors flex items-center gap-1 uppercase bg-blue-500/10 px-2 py-1 rounded-lg border border-blue-500/20"
+                                            className="text-[10px] font-bold text-[var(--color-tertiary-blue)] hover:text-blue-300 transition-colors flex items-center gap-1 uppercase bg-blue-500/10 px-2 py-1 rounded-lg border border-blue-500/20"
                                         >
                                             <Plus className="w-3 h-3" /> Add Item
                                         </button>
@@ -373,7 +373,7 @@ const ClassManagement = () => {
                                                     <div className="w-8 h-8 rounded-full bg-[var(--color-background)] border border-[#E2E8F0] flex items-center justify-center text-[10px] uppercase font-bold text-[var(--color-secondary-slate)]">{s.name.charAt(0)}</div>
                                                     <div className="text-xs font-medium">{s.name}</div>
                                                 </div>
-                                                {formData.students.includes(s._id) && <CheckCircle2 className="w-4 h-4 text-[var(--color-tertiary-sage)]" />}
+                                                {formData.students.includes(s._id) && <CheckCircle2 className="w-4 h-4 text-[var(--color-tertiary-blue)]" />}
                                             </div>
                                         ))}
                                     </div>

@@ -56,7 +56,7 @@ const AdminDashboard = () => {
                     <StatsCard title="Faculty Members" value={stats?.teachers || 0} icon={Users} color="bg-[var(--color-primary-navy)]" />
                 </Link>
                 <Link to="/dashboard/classes" className="block transform transition-all hover:scale-[1.02]">
-                    <StatsCard title="Active Classes" value={stats?.classes || 0} icon={BookOpen} color="bg-[var(--color-tertiary-sage)]" />
+                    <StatsCard title="Active Classes" value={stats?.classes || 0} icon={BookOpen} color="bg-[var(--color-tertiary-blue)]" />
                 </Link>
                 <Link to="/dashboard/audit" className="block transform transition-all hover:scale-[1.02]">
                     <StatsCard title="System Performance" value="Optimal" icon={Server} color="bg-[#EAB308]" />
@@ -67,7 +67,7 @@ const AdminDashboard = () => {
                 <div className="lg:col-span-2 bg-[var(--color-surface-default)] border border-[#E2E8F0] shadow-[var(--shadow-default)] rounded-[var(--radius-lg)] p-8">
                     <div className="flex justify-between items-center mb-8">
                         <h2 className="text-xl font-bold flex items-center gap-2 text-[var(--color-primary-navy)] font-headline">
-                            <Activity className="text-[var(--color-tertiary-sage)]" />
+                            <Activity className="text-[var(--color-tertiary-blue)]" />
                             Live System Feed
                         </h2>
                         <button className="text-sm text-[var(--color-secondary-slate)] hover:text-[var(--color-primary-navy)] transition-colors font-medium">View Logs</button>
@@ -76,7 +76,7 @@ const AdminDashboard = () => {
                         {recentActivities.map((act) => (
                             <div key={act.id} className="flex items-center justify-between p-4 bg-[var(--color-background)] border border-[#E2E8F0] rounded-[var(--radius-default)] group hover:shadow-[var(--shadow-sm)] transition-all">
                                 <div className="flex items-center gap-4">
-                                    <div className="w-10 h-10 rounded-[var(--radius-default)] bg-[var(--color-surface-default)] border border-[#E2E8F0] flex items-center justify-center text-[var(--color-secondary-slate)] group-hover:text-[var(--color-tertiary-sage)] transition-colors">
+                                    <div className="w-10 h-10 rounded-[var(--radius-default)] bg-[var(--color-surface-default)] border border-[#E2E8F0] flex items-center justify-center text-[var(--color-secondary-slate)] group-hover:text-[var(--color-tertiary-blue)] transition-colors">
                                         <Shield className="w-5 h-5" />
                                     </div>
                                     <div>

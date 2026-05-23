@@ -73,7 +73,7 @@ const Announcements = () => {
                     className="bg-[var(--color-surface-default)] shadow-sm backdrop-blur-xl rounded-2xl border border-[#E2E8F0] p-6 mb-8 shadow-xl"
                 >
                     <h2 className="text-xl font-semibold text-[var(--color-primary-navy)] mb-4 flex items-center gap-2">
-                        <Send className="w-5 h-5 text-[var(--color-tertiary-sage)]" />
+                        <Send className="w-5 h-5 text-[var(--color-tertiary-blue)]" />
                         New Announcement
                     </h2>
                     <form onSubmit={handleSubmit} className="space-y-4">

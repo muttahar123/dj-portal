@@ -70,7 +70,7 @@ const Login = () => {
                             <input type="checkbox" className="w-4 h-4 rounded border-[#CBD5E1] bg-[var(--color-surface-default)] text-[var(--color-primary-navy)] focus:ring-[var(--color-primary-navy)] transition-all" />
                             <span className="text-[var(--color-secondary-slate)] group-hover:text-[var(--color-primary-navy)]">Remember me</span>
                         </label>
-                        <a href="#" className="text-[var(--color-tertiary-sage)] hover:underline font-medium transition-colors">Forgot password?</a>
+                        <a href="#" className="text-[var(--color-tertiary-blue)] hover:underline font-medium transition-colors">Forgot password?</a>
                     </div>
 
                     <button
@@ -85,7 +85,7 @@ const Login = () => {
 
                 <div className="mt-8 pt-8 border-t border-[#E2E8F0] text-center">
                     <p className="text-[var(--color-secondary-slate)] text-sm">
-                        New student? Contact the <span className="text-[var(--color-tertiary-sage)] font-medium">Administration</span> for credentials.
+                        New student? Contact the <span className="text-[var(--color-tertiary-blue)] font-medium">Administration</span> for credentials.
                     </p>
                 </div>
             </div>

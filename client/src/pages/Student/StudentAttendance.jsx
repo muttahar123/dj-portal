@@ -38,7 +38,7 @@ const StudentAttendance = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="bg-[var(--color-surface-default)] shadow-sm border border-[#E2E8F0] p-6 rounded-3xl flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-[var(--color-tertiary-sage)]">
+                    <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-[var(--color-tertiary-blue)]">
                         <CalendarIcon className="w-6 h-6" />
                     </div>
                     <div>
