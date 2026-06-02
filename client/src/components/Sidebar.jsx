@@ -23,7 +23,7 @@ const SidebarLink = ({ to, icon: Icon, label, end = false }) => (
       flex items-center gap-3 px-4 py-3 rounded-[var(--radius-default)] transition-all duration-200 group
       ${isActive
                 ? 'bg-[var(--color-tertiary-blue)]/10 text-[var(--color-tertiary-blue)] font-semibold'
-                : 'text-[var(--color-secondary-slate)] hover:bg-[#F1F5F9] hover:text-white'}
+                : 'text-[var(--color-secondary-slate)] hover:bg-[#F1F5F9] hover:text-[var(--color-primary-navy)]'}
     `}
     >
         {({ isActive }) => (
@@ -96,7 +96,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                                 <img src="/dj-science-college-logo.png" alt="DJ Science College Logo" className="w-full h-full object-contain" />
                             </div>
                             <h2 className="text-xl font-bold text-[var(--color-primary-navy)] font-headline tracking-tight">
-                                DJ SCIENCE
+                                DJ SCIENCE COLLEGE
                             </h2>
                         </div>
                         <p className="text-xs text-[var(--color-secondary-slate)] font-medium px-1 tracking-wider uppercase">COLLEGE PORTAL</p>
