@@ -28,7 +28,7 @@ const Navbar = ({ toggleSidebar }) => {
                     </button>
                     <div className="flex items-baseline gap-2">
                         <span className="text-xl font-bold text-[var(--color-primary-navy)] font-headline">
-                            DJ Student Portal
+                            DJ college Student Portal
                         </span>
                     </div>
                 </div>
