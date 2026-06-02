@@ -136,15 +136,15 @@ const UserManagement = () => {
         <div className="space-y-6">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-                        <Users className="w-6 h-6 text-blue-500" />
+                    <h1 className="text-2xl font-bold text-[var(--color-primary-navy)] flex items-center gap-2">
+                        <Users className="w-6 h-6 text-[var(--color-tertiary-blue)]" />
                         User Management
                     </h1>
-                    <p className="text-slate-400 text-sm mt-1">Manage institutional access and roles.</p>
+                    <p className="text-[var(--color-secondary-slate)] text-sm mt-1">Manage institutional access and roles.</p>
                 </div>
                 <button
                     onClick={() => setIsModalOpen(true)}
-                    className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-semibold transition-all shadow-lg shadow-blue-600/20 active:scale-95"
+                    className="flex items-center gap-2 bg-[var(--color-primary-navy)] text-white hover:bg-[#020617] text-white px-5 py-2.5 rounded-xl font-semibold transition-all shadow-lg shadow-blue-600/20 active:scale-95"
                 >
                     <UserPlus className="w-5 h-5" />
                     Register New User
@@ -152,21 +152,21 @@ const UserManagement = () => {
             </div>
 
             {/* Filters & Search */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-900/40 p-4 rounded-2xl border border-slate-800">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-[var(--color-surface-default)] shadow-sm p-4 rounded-2xl border border-[#E2E8F0]">
                 <div className="relative group">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-blue-500 transition-colors" />
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-secondary-slate)] group-focus-within:text-[var(--color-tertiary-blue)] transition-colors" />
                     <input
                         type="text"
                         placeholder="Search by name or email..."
-                        className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-2 pl-10 pr-4 text-sm focus:outline-none focus:border-blue-500 transition-all"
+                        className="w-full bg-[var(--color-background)] border border-[#E2E8F0] rounded-xl py-2 pl-10 pr-4 text-sm focus:outline-none focus:border-blue-500 transition-all"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </div>
                 <div className="relative">
-                    <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                    <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-secondary-slate)]" />
                     <select
-                        className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-2 pl-10 pr-4 text-sm focus:outline-none focus:border-blue-500 transition-all appearance-none"
+                        className="w-full bg-[var(--color-background)] border border-[#E2E8F0] rounded-xl py-2 pl-10 pr-4 text-sm focus:outline-none focus:border-blue-500 transition-all appearance-none"
                         value={roleFilter}
                         onChange={(e) => setRoleFilter(e.target.value)}
                     >
@@ -179,11 +179,11 @@ const UserManagement = () => {
             </div>
 
             {/* Users Table */}
-            <div className="bg-slate-900/40 border border-slate-800 rounded-2xl overflow-hidden backdrop-blur-md shadow-xl">
+            <div className="bg-[var(--color-surface-default)] shadow-sm border border-[#E2E8F0] rounded-2xl overflow-hidden backdrop-blur-md shadow-xl">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>
-                            <tr className="bg-slate-800/50 text-slate-400 text-xs font-bold uppercase tracking-wider">
+                            <tr className="bg-[var(--color-background)] text-[var(--color-secondary-slate)] text-xs font-bold uppercase tracking-wider">
                                 <th className="px-6 py-4">User</th>
                                 <th className="px-6 py-4">Role</th>
                                 <th className="px-6 py-4">Department</th>
@@ -194,7 +194,7 @@ const UserManagement = () => {
                         <tbody className="divide-y divide-slate-800">
                             {isLoading ? (
                                 <tr>
-                                    <td colSpan="5" className="px-6 py-10 text-center text-slate-500">
+                                    <td colSpan="5" className="px-6 py-10 text-center text-[var(--color-secondary-slate)]">
                                         <div className="flex justify-center flex-col items-center gap-3">
                                             <div className="w-8 h-8 border-2 border-blue-500/20 border-t-blue-500 rounded-full animate-spin" />
                                             Loading directory...
@@ -203,30 +203,30 @@ const UserManagement = () => {
                                 </tr>
                             ) : filteredUsers?.length === 0 ? (
                                 <tr>
-                                    <td colSpan="5" className="px-6 py-10 text-center text-slate-500">No users found.</td>
+                                    <td colSpan="5" className="px-6 py-10 text-center text-[var(--color-secondary-slate)]">No users found.</td>
                                 </tr>
                             ) : filteredUsers?.map((user) => (
-                                <tr key={user._id} className="hover:bg-slate-800/20 transition-colors">
+                                <tr key={user._id} className="hover:bg-[#F1F5F9] transition-colors">
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-slate-700 to-slate-800 flex items-center justify-center text-slate-300 font-bold border border-slate-700 uppercase">
+                                            <div className="w-10 h-10 rounded-full bg-[var(--color-tertiary-blue)] flex items-center justify-center text-white font-bold uppercase">
                                                 {user.name.charAt(0)}
                                             </div>
                                             <div>
-                                                <div className="text-slate-200 font-medium">{user.name}</div>
-                                                <div className="text-slate-500 text-xs">{user.email}</div>
+                                                <div className="text-[var(--color-primary-navy)] font-medium">{user.name}</div>
+                                                <div className="text-[var(--color-secondary-slate)] text-xs">{user.email}</div>
                                             </div>
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">
                                         <span className={`px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase ${user.role === 'ADMIN' ? 'bg-purple-500/10 text-purple-400 border border-purple-500/20' :
-                                            user.role === 'TEACHER' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' :
+                                            user.role === 'TEACHER' ? 'bg-blue-500/10 text-[var(--color-tertiary-blue)] border border-blue-500/20' :
                                                 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
                                             }`}>
                                             {user.role}
                                         </span>
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-slate-400">{user.department}</td>
+                                    <td className="px-6 py-4 text-sm text-[var(--color-secondary-slate)]">{user.department}</td>
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-1.5 text-xs text-emerald-400 font-medium">
                                             <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.5)]" />
@@ -237,14 +237,14 @@ const UserManagement = () => {
                                         <div className="flex items-center justify-end gap-2">
                                             <button
                                                 onClick={() => openEditModal(user)}
-                                                className="p-2 hover:bg-blue-500/20 rounded-lg text-slate-500 hover:text-blue-400 transition-all"
+                                                className="p-2 hover:bg-blue-500/20 rounded-lg text-[var(--color-secondary-slate)] hover:text-[var(--color-tertiary-blue)] transition-all"
                                                 title="Edit User"
                                             >
                                                 <Edit2 className="w-4 h-4" />
                                             </button>
                                             <button
                                                 onClick={() => handleDelete(user)}
-                                                className="p-2 hover:bg-red-500/20 rounded-lg text-slate-500 hover:text-red-400 transition-all"
+                                                className="p-2 hover:bg-red-500/20 rounded-lg text-[var(--color-secondary-slate)] hover:text-red-400 transition-all"
                                                 title="Delete User"
                                             >
                                                 <Trash2 className="w-4 h-4" />
@@ -261,26 +261,26 @@ const UserManagement = () => {
             {/* Register/Edit User Modal */}
             {isModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-                    <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-md" onClick={closeModal} />
-                    <div className="relative bg-slate-900 border border-slate-800 w-full max-w-xl rounded-3xl overflow-hidden shadow-2xl animate-in fade-in zoom-in duration-200">
+                    <div className="absolute inset-0 bg-[#0F172A]/60 backdrop-blur-md" onClick={closeModal} />
+                    <div className="relative bg-[var(--color-surface-default)] border border-[#E2E8F0] w-full max-w-xl rounded-3xl overflow-hidden shadow-2xl animate-in fade-in zoom-in duration-200">
                         <div className="p-8">
                             <div className="flex justify-between items-center mb-6">
-                                <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-                                    {editingUser ? <Edit2 className="text-blue-500" /> : <UserPlus className="text-blue-500" />}
+                                <h2 className="text-2xl font-bold text-[var(--color-primary-navy)] flex items-center gap-2">
+                                    {editingUser ? <Edit2 className="text-[var(--color-tertiary-blue)]" /> : <UserPlus className="text-[var(--color-tertiary-blue)]" />}
                                     {editingUser ? 'Edit User' : 'Register New User'}
                                 </h2>
-                                <button onClick={closeModal} className="text-slate-500 hover:text-white transition-colors">
+                                <button onClick={closeModal} className="text-[var(--color-secondary-slate)] hover:text-[var(--color-primary-navy)] transition-colors">
                                     <X className="w-6 h-6" />
                                 </button>
                             </div>
 
                             <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                 <div className="md:col-span-2 space-y-1">
-                                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">Full Name</label>
+                                    <label className="text-xs font-bold text-[var(--color-secondary-slate)] uppercase tracking-wider pl-1">Full Name</label>
                                     <input
                                         name="name"
                                         required
-                                        className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 transition-all"
+                                        className="w-full bg-[var(--color-background)] border border-[#E2E8F0] rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 transition-all"
                                         placeholder="Enter full name"
                                         value={formData.name}
                                         onChange={handleInputChange}
@@ -288,12 +288,12 @@ const UserManagement = () => {
                                 </div>
 
                                 <div className="space-y-1">
-                                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">Email Address</label>
+                                    <label className="text-xs font-bold text-[var(--color-secondary-slate)] uppercase tracking-wider pl-1">Email Address</label>
                                     <input
                                         name="email"
                                         type="email"
                                         required
-                                        className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 transition-all"
+                                        className="w-full bg-[var(--color-background)] border border-[#E2E8F0] rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 transition-all"
                                         placeholder="name@example.com"
                                         value={formData.email}
                                         onChange={handleInputChange}
@@ -301,14 +301,14 @@ const UserManagement = () => {
                                 </div>
 
                                 <div className="space-y-1">
-                                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">
+                                    <label className="text-xs font-bold text-[var(--color-secondary-slate)] uppercase tracking-wider pl-1">
                                         {editingUser ? 'New Password (leave blank to keep)' : 'Initial Password'}
                                     </label>
                                     <input
                                         name="password"
                                         type="password"
                                         required={!editingUser}
-                                        className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 transition-all"
+                                        className="w-full bg-[var(--color-background)] border border-[#E2E8F0] rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 transition-all"
                                         placeholder={editingUser ? 'Leave blank to keep current' : 'Minimum 6 chars'}
                                         value={formData.password}
                                         onChange={handleInputChange}
@@ -316,10 +316,10 @@ const UserManagement = () => {
                                 </div>
 
                                 <div className="space-y-1">
-                                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">Role</label>
+                                    <label className="text-xs font-bold text-[var(--color-secondary-slate)] uppercase tracking-wider pl-1">Role</label>
                                     <select
                                         name="role"
-                                        className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 transition-all appearance-none"
+                                        className="w-full bg-[var(--color-background)] border border-[#E2E8F0] rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 transition-all appearance-none"
                                         value={formData.role}
                                         onChange={handleInputChange}
                                     >
@@ -330,11 +330,11 @@ const UserManagement = () => {
                                 </div>
 
                                 <div className="space-y-1">
-                                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">Department</label>
+                                    <label className="text-xs font-bold text-[var(--color-secondary-slate)] uppercase tracking-wider pl-1">Department</label>
                                     <input
                                         name="department"
                                         required
-                                        className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 transition-all"
+                                        className="w-full bg-[var(--color-background)] border border-[#E2E8F0] rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 transition-all"
                                         placeholder="e.g. Physics, Administration"
                                         value={formData.department}
                                         onChange={handleInputChange}
@@ -343,10 +343,10 @@ const UserManagement = () => {
 
                                 {formData.role === 'STUDENT' && (
                                     <div className="md:col-span-2 space-y-1">
-                                        <label className="text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">Student ID</label>
+                                        <label className="text-xs font-bold text-[var(--color-secondary-slate)] uppercase tracking-wider pl-1">Student ID</label>
                                         <input
                                             name="studentId"
-                                            className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 transition-all"
+                                            className="w-full bg-[var(--color-background)] border border-[#E2E8F0] rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 transition-all"
                                             placeholder="e.g. STD-2024-001"
                                             value={formData.studentId}
                                             onChange={handleInputChange}
@@ -356,10 +356,10 @@ const UserManagement = () => {
 
                                 {formData.role === 'TEACHER' && (
                                     <div className="md:col-span-2 space-y-1">
-                                        <label className="text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">Teacher ID</label>
+                                        <label className="text-xs font-bold text-[var(--color-secondary-slate)] uppercase tracking-wider pl-1">Teacher ID</label>
                                         <input
                                             name="teacherId"
-                                            className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 transition-all"
+                                            className="w-full bg-[var(--color-background)] border border-[#E2E8F0] rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 transition-all"
                                             placeholder="e.g. TCH-PHY-01"
                                             value={formData.teacherId}
                                             onChange={handleInputChange}
@@ -371,7 +371,7 @@ const UserManagement = () => {
                                     <button
                                         disabled={createUserMutation.isPending || updateUserMutation.isPending}
                                         type="submit"
-                                        className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 text-white font-bold py-4 rounded-2xl transition-all shadow-lg shadow-blue-600/30 active:scale-[0.98] flex items-center justify-center gap-2"
+                                        className="w-full bg-[var(--color-primary-navy)] text-white hover:bg-[#020617] disabled:bg-blue-800 text-white font-bold py-4 rounded-2xl transition-all shadow-lg shadow-blue-600/30 active:scale-[0.98] flex items-center justify-center gap-2"
                                     >
                                         {(createUserMutation.isPending || updateUserMutation.isPending) ? (
                                             <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />

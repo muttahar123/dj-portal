@@ -27,8 +27,8 @@ const AnnouncementsFeed = () => {
                         <Megaphone className="w-8 h-8 text-amber-400" />
                     </div>
                     <div>
-                        <h1 className="text-3xl font-bold text-white">Announcements</h1>
-                        <p className="text-slate-400 mt-1">Stay updated with important notices</p>
+                        <h1 className="text-3xl font-bold text-[var(--color-primary-navy)]">Announcements</h1>
+                        <p className="text-[var(--color-secondary-slate)] mt-1">Stay updated with important notices</p>
                     </div>
                 </div>
 
@@ -42,10 +42,10 @@ const AnnouncementsFeed = () => {
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            className="text-center py-12 bg-slate-900/30 rounded-2xl border border-slate-800"
+                            className="text-center py-12 bg-[var(--color-surface-default)]/30 rounded-2xl border border-[#E2E8F0]"
                         >
                             <AlertCircle className="w-12 h-12 text-slate-600 mx-auto mb-3" />
-                            <p className="text-slate-400">No announcements available</p>
+                            <p className="text-[var(--color-secondary-slate)]">No announcements available</p>
                         </motion.div>
                     ) : (
                         <AnimatePresence>
@@ -56,11 +56,11 @@ const AnnouncementsFeed = () => {
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -20 }}
                                     transition={{ delay: index * 0.05 }}
-                                    className="bg-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-800 p-6 hover:border-slate-700 transition-all"
+                                    className="bg-[var(--color-surface-default)] shadow-sm backdrop-blur-xl rounded-2xl border border-[#E2E8F0] p-6 hover:border-[#E2E8F0] transition-all"
                                 >
-                                    <h3 className="text-lg font-semibold text-white mb-2">{announcement.title}</h3>
-                                    <p className="text-slate-300 mb-4 whitespace-pre-wrap">{announcement.content}</p>
-                                    <div className="flex items-center gap-4 text-sm text-slate-500">
+                                    <h3 className="text-lg font-semibold text-[var(--color-primary-navy)] mb-2">{announcement.title}</h3>
+                                    <p className="text-[var(--color-primary-navy)] mb-4 whitespace-pre-wrap">{announcement.content}</p>
+                                    <div className="flex items-center gap-4 text-sm text-[var(--color-secondary-slate)]">
                                         <span className="flex items-center gap-1">
                                             <User className="w-4 h-4" />
                                             {announcement.createdBy?.name || 'Admin'}

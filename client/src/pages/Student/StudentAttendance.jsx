@@ -28,49 +28,49 @@ const StudentAttendance = () => {
         <div className="space-y-6">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-white flex items-center gap-2">
+                    <h1 className="text-2xl font-bold text-[var(--color-primary-navy)] flex items-center gap-2">
                         <ClipboardCheck className="w-6 h-6 text-emerald-500" />
                         Attendance History
                     </h1>
-                    <p className="text-slate-400 text-sm mt-1">Monitor your presence and engagement records.</p>
+                    <p className="text-[var(--color-secondary-slate)] text-sm mt-1">Monitor your presence and engagement records.</p>
                 </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-3xl flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500">
+                <div className="bg-[var(--color-surface-default)] shadow-sm border border-[#E2E8F0] p-6 rounded-3xl flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-[var(--color-tertiary-blue)]">
                         <CalendarIcon className="w-6 h-6" />
                     </div>
                     <div>
-                        <p className="text-slate-500 text-xs font-bold uppercase tracking-wider">Total Sessions</p>
-                        <p className="text-2xl font-bold text-slate-100">{total}</p>
+                        <p className="text-[var(--color-secondary-slate)] text-xs font-bold uppercase tracking-wider">Total Sessions</p>
+                        <p className="text-2xl font-bold text-[var(--color-primary-navy)]">{total}</p>
                     </div>
                 </div>
-                <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-3xl flex items-center gap-4">
+                <div className="bg-[var(--color-surface-default)] shadow-sm border border-[#E2E8F0] p-6 rounded-3xl flex items-center gap-4">
                     <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-500">
                         <CircleCheck className="w-6 h-6" />
                     </div>
                     <div>
-                        <p className="text-slate-500 text-xs font-bold uppercase tracking-wider">Present</p>
-                        <p className="text-2xl font-bold text-slate-100">{present}</p>
+                        <p className="text-[var(--color-secondary-slate)] text-xs font-bold uppercase tracking-wider">Present</p>
+                        <p className="text-2xl font-bold text-[var(--color-primary-navy)]">{present}</p>
                     </div>
                 </div>
-                <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-3xl flex items-center gap-4">
+                <div className="bg-[var(--color-surface-default)] shadow-sm border border-[#E2E8F0] p-6 rounded-3xl flex items-center gap-4">
                     <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${percentage > 75 ? 'bg-emerald-500/10 text-emerald-500' : 'bg-orange-500/10 text-orange-500'}`}>
                         <Award className="w-6 h-6" />
                     </div>
                     <div>
-                        <p className="text-slate-500 text-xs font-bold uppercase tracking-wider">Overall Ratio</p>
-                        <p className="text-2xl font-bold text-slate-100">{percentage}%</p>
+                        <p className="text-[var(--color-secondary-slate)] text-xs font-bold uppercase tracking-wider">Overall Ratio</p>
+                        <p className="text-2xl font-bold text-[var(--color-primary-navy)]">{percentage}%</p>
                     </div>
                 </div>
             </div>
 
-            <div className="bg-slate-900/40 border border-slate-800 rounded-3xl overflow-hidden shadow-xl">
+            <div className="bg-[var(--color-surface-default)] shadow-sm border border-[#E2E8F0] rounded-3xl overflow-hidden shadow-xl">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>
-                            <tr className="bg-slate-800/50 text-slate-400 text-[10px] font-bold uppercase tracking-widest">
+                            <tr className="bg-[var(--color-background)] text-[var(--color-secondary-slate)] text-[10px] font-bold uppercase tracking-widest">
                                 <th className="px-6 py-4 font-bold">Class Name</th>
                                 <th className="px-6 py-4 font-bold">Session Date</th>
                                 <th className="px-6 py-4 font-bold">Attendance Status</th>
@@ -80,12 +80,12 @@ const StudentAttendance = () => {
                             {isLoading ? (
                                 <tr><td colSpan="3" className="px-6 py-10 text-center"><div className="w-6 h-6 border-2 border-blue-500/20 border-t-blue-500 rounded-full animate-spin mx-auto" /></td></tr>
                             ) : attendance?.map((log) => (
-                                <tr key={log._id} className="hover:bg-slate-800/20 transition-colors">
+                                <tr key={log._id} className="hover:bg-[#F1F5F9] transition-colors">
                                     <td className="px-6 py-4">
-                                        <div className="text-slate-200 font-semibold">{log.class?.name}</div>
-                                        <div className="text-slate-500 text-xs font-mono">{log.class?.code}</div>
+                                        <div className="text-[var(--color-primary-navy)] font-semibold">{log.class?.name}</div>
+                                        <div className="text-[var(--color-secondary-slate)] text-xs font-mono">{log.class?.code}</div>
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-slate-400 font-medium">
+                                    <td className="px-6 py-4 text-sm text-[var(--color-secondary-slate)] font-medium">
                                         {format(new Date(log.date), 'MMMM dd, yyyy')}
                                     </td>
                                     <td className="px-6 py-4">

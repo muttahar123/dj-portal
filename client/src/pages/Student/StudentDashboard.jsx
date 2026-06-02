@@ -39,47 +39,47 @@ const StudentDashboard = () => {
         <div className="space-y-8">
             <div className="flex justify-between items-center">
                 <div>
-                    <h1 className="text-3xl font-bold text-white">Student Hub</h1>
-                    <p className="text-slate-400 mt-1">Unified view of your academic progress and deadlines.</p>
+                    <h1 className="text-3xl font-bold text-[var(--color-primary-navy)] font-headline tracking-tight">Student Hub</h1>
+                    <p className="text-[var(--color-secondary-slate)] mt-1 tracking-wide">Unified view of your academic progress and deadlines.</p>
                 </div>
-                <Link to="/dashboard/schedule" className="bg-slate-800 hover:bg-slate-700 text-white px-5 py-3 rounded-2xl font-bold transition-all shadow-xl flex items-center gap-2">
-                    <Calendar className="w-5 h-5 text-blue-400" />
+                <Link to="/dashboard/schedule" className="bg-[var(--color-surface-default)] border border-[#E2E8F0] hover:bg-[#F1F5F9] text-[var(--color-primary-navy)] px-5 py-3 rounded-[var(--radius-default)] font-bold transition-all shadow-sm flex items-center gap-2">
+                    <Calendar className="w-5 h-5 text-[var(--color-tertiary-blue)]" />
                     View Lab Schedule
                 </Link>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <Link to="/dashboard/student/assignments" className="block transform transition-all hover:scale-[1.02]">
-                    <StatsCard title="Pending Tasks" value={upcomingTasks.length} icon={FileText} color="bg-orange-600" />
+                    <StatsCard title="Pending Tasks" value={upcomingTasks.length} icon={FileText} color="bg-[var(--color-warning)]" />
                 </Link>
                 <Link to="/dashboard/student/attendance" className="block transform transition-all hover:scale-[1.02]">
-                    <StatsCard title="Attendance" value={`${percentage}%`} icon={ClipboardCheck} color="bg-blue-600" />
+                    <StatsCard title="Attendance" value={`${percentage}%`} icon={ClipboardCheck} color="bg-[var(--color-primary-navy)]" />
                 </Link>
                 <Link to="/dashboard/schedule" className="block transform transition-all hover:scale-[1.02]">
-                    <StatsCard title="Active Courses" value="4" icon={Book} color="bg-purple-600" />
+                    <StatsCard title="Active Courses" value="4" icon={Book} color="bg-[var(--color-tertiary-blue)]" />
                 </Link>
-                <StatsCard title="Performance" value="A+" icon={Activity} color="bg-emerald-600" />
+                <StatsCard title="Performance" value="A+" icon={Activity} color="bg-[var(--color-success)]" />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div className="lg:col-span-2 bg-slate-900/40 border border-slate-800 rounded-3xl p-8 backdrop-blur-md">
-                    <h2 className="text-xl font-bold mb-8 flex items-center gap-2">
-                        <FileText className="text-orange-400" />
+                <div className="lg:col-span-2 bg-[var(--color-surface-default)] border border-[#E2E8F0] shadow-[var(--shadow-default)] rounded-[var(--radius-lg)] p-8">
+                    <h2 className="text-xl font-bold mb-8 flex items-center gap-2 text-[var(--color-primary-navy)] font-headline">
+                        <FileText className="text-[var(--color-warning)]" />
                         Upcoming Deadlines
                     </h2>
                     <div className="space-y-4">
                         {upcomingTasks.length === 0 ? (
-                            <p className="text-slate-500 text-sm italic py-4">No pending assignments found. You're all caught up!</p>
+                            <p className="text-[var(--color-secondary-slate)] text-sm italic py-4">No pending assignments found. You're all caught up!</p>
                         ) : upcomingTasks.map((task) => (
-                            <div key={task._id} className="p-5 bg-slate-950/60 border border-slate-800 rounded-2xl group hover:border-orange-500/30 transition-all flex justify-between items-center">
+                            <div key={task._id} className="p-5 bg-[var(--color-background)] border border-[#E2E8F0] rounded-[var(--radius-default)] group hover:border-[var(--color-warning)] transition-all flex justify-between items-center shadow-sm">
                                 <div>
-                                    <div className="text-[10px] font-black text-orange-500 mb-1 tracking-widest uppercase">{task.class?.code}</div>
-                                    <h3 className="text-white font-bold">{task.title}</h3>
-                                    <div className="text-xs text-slate-500 mt-1">
-                                        Due: {new Date(task.dueDate).toLocaleDateString()}
+                                    <div className="text-[10px] font-black text-[var(--color-warning)] mb-1 tracking-widest uppercase">{task.class?.code}</div>
+                                    <h3 className="text-[var(--color-primary-navy)] font-bold">{task.title}</h3>
+                                    <div className="text-xs text-[var(--color-secondary-slate)] mt-1">
+                                        Due: <span className="font-mono">{new Date(task.dueDate).toLocaleDateString()}</span>
                                     </div>
                                 </div>
-                                <Link to="/dashboard/student/assignments" className="p-3 bg-slate-800 rounded-xl text-slate-400 group-hover:bg-orange-600 group-hover:text-white transition-all">
+                                <Link to="/dashboard/student/assignments" className="p-3 bg-[var(--color-surface-default)] border border-[#E2E8F0] rounded-[var(--radius-default)] text-[var(--color-secondary-slate)] group-hover:bg-[var(--color-warning)] group-hover:text-[var(--color-primary-navy)] group-hover:border-[var(--color-warning)] transition-all">
                                     <ArrowRight className="w-5 h-5" />
                                 </Link>
                             </div>
@@ -87,25 +87,25 @@ const StudentDashboard = () => {
                     </div>
                 </div>
 
-                <div className="bg-slate-900/40 border border-slate-800 rounded-3xl p-8 backdrop-blur-md relative overflow-hidden">
-                    <h2 className="text-xl font-bold mb-8 flex items-center gap-2">
-                        <Activity className="text-emerald-400" />
+                <div className="bg-[var(--color-surface-default)] border border-[#E2E8F0] shadow-[var(--shadow-default)] rounded-[var(--radius-lg)] p-8 relative overflow-hidden">
+                    <h2 className="text-xl font-bold mb-8 flex items-center gap-2 text-[var(--color-primary-navy)] font-headline">
+                        <Activity className="text-[var(--color-tertiary-blue)]" />
                         Academic Stance
                     </h2>
                     <div className="space-y-6">
-                        <div className="p-4 bg-slate-950/40 rounded-2xl border border-slate-800">
+                        <div className="p-4 bg-[var(--color-background)] rounded-[var(--radius-default)] border border-[#E2E8F0]">
                             <div className="flex justify-between text-xs font-bold mb-2">
-                                <span className="text-slate-500 uppercase tracking-widest">Attendance Metric</span>
-                                <span className={percentage > 75 ? 'text-emerald-400' : 'text-orange-400'}>{percentage}%</span>
+                                <span className="text-[var(--color-secondary-slate)] uppercase tracking-widest">Attendance Metric</span>
+                                <span className={percentage > 75 ? 'text-[var(--color-success)]' : 'text-[var(--color-warning)]'}>{percentage}%</span>
                             </div>
-                            <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                                <div className={`h-full transition-all duration-1000 ${percentage > 75 ? 'bg-emerald-500' : 'bg-orange-500'}`} style={{ width: `${percentage}%` }} />
+                            <div className="w-full bg-[#E2E8F0] h-2 rounded-full overflow-hidden">
+                                <div className={`h-full transition-all duration-1000 ${percentage > 75 ? 'bg-[var(--color-success)]' : 'bg-[var(--color-warning)]'}`} style={{ width: `${percentage}%` }} />
                             </div>
                         </div>
-                        <div className="p-4 bg-slate-950/40 rounded-2xl border border-slate-800 text-sm text-slate-400 leading-relaxed italic">
+                        <div className="p-4 bg-[var(--color-background)] rounded-[var(--radius-default)] border border-[#E2E8F0] text-sm text-[var(--color-secondary-slate)] leading-relaxed italic">
                             "Education is the most powerful weapon which you can use to change the world."
                         </div>
-                        <Link to="/dashboard/student/attendance" className="block text-center py-4 bg-blue-600 hover:bg-blue-700 rounded-2xl font-bold text-white transition-all shadow-lg shadow-blue-600/20">
+                        <Link to="/dashboard/student/attendance" className="block text-center py-4 bg-[var(--color-primary-navy)] hover:bg-[#020617] rounded-[var(--radius-default)] font-bold text-white transition-all shadow-sm">
                             View Detailed History
                         </Link>
                     </div>

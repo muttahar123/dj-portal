@@ -161,15 +161,15 @@ const ClassManagement = () => {
         <div className="space-y-6">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-                        <BookOpen className="w-6 h-6 text-blue-500" />
+                    <h1 className="text-2xl font-bold text-[var(--color-primary-navy)] flex items-center gap-2">
+                        <BookOpen className="w-6 h-6 text-[var(--color-tertiary-blue)]" />
                         Class Management
                     </h1>
-                    <p className="text-slate-400 text-sm mt-1">Configure academic classes, schedules, and enrollments.</p>
+                    <p className="text-[var(--color-secondary-slate)] text-sm mt-1">Configure academic classes, schedules, and enrollments.</p>
                 </div>
                 <button
                     onClick={() => setIsModalOpen(true)}
-                    className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-semibold transition-all shadow-lg shadow-blue-600/20 active:scale-95"
+                    className="flex items-center gap-2 bg-[var(--color-primary-navy)] text-white hover:bg-[#020617] text-white px-5 py-2.5 rounded-xl font-semibold transition-all shadow-lg shadow-blue-600/20 active:scale-95"
                 >
                     <Plus className="w-5 h-5" />
                     Create New Class
@@ -182,55 +182,55 @@ const ClassManagement = () => {
                     <div className="w-10 h-10 border-2 border-blue-500/20 border-t-blue-500 rounded-full animate-spin" />
                 </div>
             ) : classes?.length === 0 ? (
-                <div className="bg-slate-900/40 border border-slate-800 rounded-3xl p-12 text-center text-slate-500">
+                <div className="bg-[var(--color-surface-default)] shadow-sm border border-[#E2E8F0] rounded-3xl p-12 text-center text-[var(--color-secondary-slate)]">
                     No classes found. Start by creating a new class.
                 </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {classes?.map((cls) => (
-                        <div key={cls._id} className="bg-slate-900/40 backdrop-blur-md border border-slate-800 rounded-3xl p-6 hover:border-slate-700 transition-all group shadow-xl">
+                        <div key={cls._id} className="bg-[var(--color-surface-default)] shadow-sm backdrop-blur-md border border-[#E2E8F0] rounded-3xl p-6 hover:border-[#E2E8F0] transition-all group shadow-xl">
                             <div className="flex justify-between items-start mb-4">
-                                <div className="w-12 h-12 rounded-2xl bg-blue-600/10 flex items-center justify-center text-blue-500">
+                                <div className="w-12 h-12 rounded-2xl bg-[var(--color-primary-navy)] text-white/10 flex items-center justify-center text-[var(--color-tertiary-blue)]">
                                     <BookOpen className="w-6 h-6" />
                                 </div>
-                                <div className="text-xs font-mono text-slate-500 bg-slate-800/50 px-2 py-1 rounded tracking-widest">{cls.code}</div>
+                                <div className="text-xs font-mono text-[var(--color-secondary-slate)] bg-[var(--color-background)] px-2 py-1 rounded tracking-widest">{cls.code}</div>
                             </div>
-                            <h3 className="text-xl font-bold text-slate-100 mb-1">{cls.name}</h3>
-                            <div className="flex items-center gap-2 text-slate-400 text-sm mb-6">
+                            <h3 className="text-xl font-bold text-[var(--color-primary-navy)] mb-1">{cls.name}</h3>
+                            <div className="flex items-center gap-2 text-[var(--color-secondary-slate)] text-sm mb-6">
                                 <Users className="w-4 h-4" />
                                 <span>{cls.students?.length} Students Enrolled</span>
                             </div>
 
                             <div className="space-y-3 mb-6">
                                 {cls.schedule?.map((item, idx) => (
-                                    <div key={idx} className="flex items-center gap-3 text-xs text-slate-500 bg-slate-950/40 p-2.5 rounded-xl border border-slate-800/50">
-                                        <Calendar className="w-3.5 h-3.5 text-blue-400" />
-                                        <span className="font-semibold text-slate-400 uppercase tracking-tighter w-16">{item.day}</span>
+                                    <div key={idx} className="flex items-center gap-3 text-xs text-[var(--color-secondary-slate)] bg-[var(--color-background)] p-2.5 rounded-xl border border-[#E2E8F0]/50">
+                                        <Calendar className="w-3.5 h-3.5 text-[var(--color-tertiary-blue)]" />
+                                        <span className="font-semibold text-[var(--color-secondary-slate)] uppercase tracking-tighter w-16">{item.day}</span>
                                         <Clock className="w-3.5 h-3.5 ml-1 text-slate-600" />
-                                        <span className="text-slate-300 font-medium">{item.startTime} - {item.endTime}</span>
+                                        <span className="text-[var(--color-primary-navy)] font-medium">{item.startTime} - {item.endTime}</span>
                                         <MapPin className="w-3.5 h-3.5 ml-1 text-slate-600" />
-                                        <span className="text-slate-300 font-medium">{item.room}</span>
+                                        <span className="text-[var(--color-primary-navy)] font-medium">{item.room}</span>
                                     </div>
                                 ))}
                             </div>
 
-                            <div className="pt-4 border-t border-slate-800 flex items-center justify-between">
+                            <div className="pt-4 border-t border-[#E2E8F0] flex items-center justify-between">
                                 <div className="flex items-center gap-2">
-                                    <div className="w-7 h-7 rounded-full bg-slate-800 flex items-center justify-center text-[10px] font-bold text-slate-500 uppercase">
+                                    <div className="w-7 h-7 rounded-full bg-[var(--color-background)] border border-[#E2E8F0] flex items-center justify-center text-[10px] font-bold text-[var(--color-secondary-slate)] uppercase">
                                         {cls.teacher?.name?.charAt(0)}
                                     </div>
-                                    <span className="text-xs font-medium text-slate-400">{cls.teacher?.name}</span>
+                                    <span className="text-xs font-medium text-[var(--color-secondary-slate)]">{cls.teacher?.name}</span>
                                 </div>
                                 <div className="flex items-center gap-1">
                                     <button
                                         onClick={() => openEditModal(cls)}
-                                        className="text-slate-500 hover:text-blue-400 transition-colors p-1.5 hover:bg-blue-500/10 rounded-lg"
+                                        className="text-[var(--color-secondary-slate)] hover:text-[var(--color-tertiary-blue)] transition-colors p-1.5 hover:bg-blue-500/10 rounded-lg"
                                     >
                                         <Edit3 className="w-4 h-4" />
                                     </button>
                                     <button
                                         onClick={() => handleDelete(cls)}
-                                        className="text-slate-500 hover:text-red-400 transition-colors p-1.5 hover:bg-red-500/10 rounded-lg"
+                                        className="text-[var(--color-secondary-slate)] hover:text-red-400 transition-colors p-1.5 hover:bg-red-500/10 rounded-lg"
                                     >
                                         <Trash2 className="w-4 h-4" />
                                     </button>
@@ -244,15 +244,15 @@ const ClassManagement = () => {
             {/* Create/Edit Class Modal */}
             {isModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-                    <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-md" onClick={closeModal} />
-                    <div className="relative bg-slate-900 border border-slate-800 w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col">
+                    <div className="absolute inset-0 bg-[#0F172A]/60 backdrop-blur-md" onClick={closeModal} />
+                    <div className="relative bg-[var(--color-surface-default)] border border-[#E2E8F0] w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col">
                         <div className="p-8 overflow-y-auto scrollbar-hide">
                             <div className="flex justify-between items-center mb-6">
-                                <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-                                    {editingClass ? <Edit3 className="text-blue-500" /> : <Plus className="text-blue-500" />}
+                                <h2 className="text-2xl font-bold text-[var(--color-primary-navy)] flex items-center gap-2">
+                                    {editingClass ? <Edit3 className="text-[var(--color-tertiary-blue)]" /> : <Plus className="text-[var(--color-tertiary-blue)]" />}
                                     {editingClass ? 'Edit Class' : 'Configure New Class'}
                                 </h2>
-                                <button onClick={closeModal} className="text-slate-500 hover:text-white transition-colors p-2 hover:bg-slate-800 rounded-lg">
+                                <button onClick={closeModal} className="text-[var(--color-secondary-slate)] hover:text-[var(--color-primary-navy)] transition-colors p-2 hover:bg-[var(--color-background)] border border-[#E2E8F0] rounded-lg">
                                     <X className="w-5 h-5" />
                                 </button>
                             </div>
@@ -260,23 +260,23 @@ const ClassManagement = () => {
                             <form onSubmit={handleSubmit} className="space-y-6">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                     <div className="space-y-1">
-                                        <label className="text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">Class Name</label>
+                                        <label className="text-xs font-bold text-[var(--color-secondary-slate)] uppercase tracking-wider pl-1">Class Name</label>
                                         <input
                                             name="name"
                                             required
-                                            className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 transition-all text-sm text-white"
+                                            className="w-full bg-[var(--color-background)] border border-[#E2E8F0] rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 transition-all text-sm text-[var(--color-primary-navy)]"
                                             placeholder="e.g. Theoretical Physics"
                                             value={formData.name}
                                             onChange={handleInputChange}
                                         />
                                     </div>
                                     <div className="space-y-1">
-                                        <label className="text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">Class Code</label>
+                                        <label className="text-xs font-bold text-[var(--color-secondary-slate)] uppercase tracking-wider pl-1">Class Code</label>
                                         <input
                                             name="code"
                                             required
                                             disabled={!!editingClass}
-                                            className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 transition-all text-sm font-mono tracking-widest text-white disabled:opacity-50"
+                                            className="w-full bg-[var(--color-background)] border border-[#E2E8F0] rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 transition-all text-sm font-mono tracking-widest text-[var(--color-primary-navy)] disabled:opacity-50"
                                             placeholder="PHY-101"
                                             value={formData.code}
                                             onChange={handleInputChange}
@@ -285,11 +285,11 @@ const ClassManagement = () => {
                                 </div>
 
                                 <div className="space-y-1">
-                                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">Assign Teacher</label>
+                                    <label className="text-xs font-bold text-[var(--color-secondary-slate)] uppercase tracking-wider pl-1">Assign Teacher</label>
                                     <select
                                         name="teacher"
                                         required
-                                        className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 transition-all text-sm text-white"
+                                        className="w-full bg-[var(--color-background)] border border-[#E2E8F0] rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 transition-all text-sm text-[var(--color-primary-navy)]"
                                         value={formData.teacher}
                                         onChange={handleInputChange}
                                     >
@@ -302,20 +302,20 @@ const ClassManagement = () => {
 
                                 <div className="space-y-3">
                                     <div className="flex justify-between items-center">
-                                        <label className="text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">Class Schedule</label>
+                                        <label className="text-xs font-bold text-[var(--color-secondary-slate)] uppercase tracking-wider pl-1">Class Schedule</label>
                                         <button
                                             type="button"
                                             onClick={addScheduleItem}
-                                            className="text-[10px] font-bold text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-1 uppercase bg-blue-500/10 px-2 py-1 rounded-lg border border-blue-500/20"
+                                            className="text-[10px] font-bold text-[var(--color-tertiary-blue)] hover:text-blue-300 transition-colors flex items-center gap-1 uppercase bg-blue-500/10 px-2 py-1 rounded-lg border border-blue-500/20"
                                         >
                                             <Plus className="w-3 h-3" /> Add Item
                                         </button>
                                     </div>
 
                                     {formData.schedule.map((item, idx) => (
-                                        <div key={idx} className="grid grid-cols-2 md:grid-cols-5 gap-3 bg-slate-950/30 p-4 rounded-2xl border border-slate-800/50">
+                                        <div key={idx} className="grid grid-cols-2 md:grid-cols-5 gap-3 bg-[var(--color-background)]/30 p-4 rounded-2xl border border-[#E2E8F0]/50">
                                             <select
-                                                className="bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs focus:outline-none focus:border-blue-500 text-white"
+                                                className="bg-[var(--color-background)] border border-[#E2E8F0] rounded-lg p-2 text-xs focus:outline-none focus:border-blue-500 text-[var(--color-primary-navy)]"
                                                 value={item.day}
                                                 onChange={(e) => handleScheduleChange(idx, 'day', e.target.value)}
                                             >
@@ -326,21 +326,21 @@ const ClassManagement = () => {
                                             <input
                                                 type="text"
                                                 placeholder="Start"
-                                                className="bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs focus:outline-none focus:border-blue-500 text-white"
+                                                className="bg-[var(--color-background)] border border-[#E2E8F0] rounded-lg p-2 text-xs focus:outline-none focus:border-blue-500 text-[var(--color-primary-navy)]"
                                                 value={item.startTime}
                                                 onChange={(e) => handleScheduleChange(idx, 'startTime', e.target.value)}
                                             />
                                             <input
                                                 type="text"
                                                 placeholder="End"
-                                                className="bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs focus:outline-none focus:border-blue-500 text-white"
+                                                className="bg-[var(--color-background)] border border-[#E2E8F0] rounded-lg p-2 text-xs focus:outline-none focus:border-blue-500 text-[var(--color-primary-navy)]"
                                                 value={item.endTime}
                                                 onChange={(e) => handleScheduleChange(idx, 'endTime', e.target.value)}
                                             />
                                             <input
                                                 type="text"
                                                 placeholder="Room"
-                                                className="bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs focus:outline-none focus:border-blue-500 text-white"
+                                                className="bg-[var(--color-background)] border border-[#E2E8F0] rounded-lg p-2 text-xs focus:outline-none focus:border-blue-500 text-[var(--color-primary-navy)]"
                                                 value={item.room}
                                                 onChange={(e) => handleScheduleChange(idx, 'room', e.target.value)}
                                             />
@@ -358,22 +358,22 @@ const ClassManagement = () => {
                                 </div>
 
                                 <div className="space-y-3">
-                                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">Enroll Students ({formData.students.length} selected)</label>
-                                    <div className="bg-slate-950/30 border border-slate-800 rounded-2xl p-4 h-48 overflow-y-auto scrollbar-hide space-y-2">
+                                    <label className="text-xs font-bold text-[var(--color-secondary-slate)] uppercase tracking-wider pl-1">Enroll Students ({formData.students.length} selected)</label>
+                                    <div className="bg-[var(--color-background)]/30 border border-[#E2E8F0] rounded-2xl p-4 h-48 overflow-y-auto scrollbar-hide space-y-2">
                                         {allStudents?.map(s => (
                                             <div
                                                 key={s._id}
                                                 onClick={() => handleStudentToggle(s._id)}
                                                 className={`flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all border ${formData.students.includes(s._id)
-                                                    ? 'bg-blue-600/10 border-blue-500/30 text-blue-200'
-                                                    : 'bg-slate-900/50 border-slate-800 text-slate-400 opacity-60 hover:opacity-100'
+                                                    ? 'bg-[var(--color-primary-navy)] text-white/10 border-blue-500/30 text-blue-200'
+                                                    : 'bg-[var(--color-surface-default)] shadow-sm border-[#E2E8F0] text-[var(--color-secondary-slate)] opacity-60 hover:opacity-100'
                                                     }`}
                                             >
                                                 <div className="flex items-center gap-3">
-                                                    <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-[10px] uppercase font-bold text-slate-500">{s.name.charAt(0)}</div>
+                                                    <div className="w-8 h-8 rounded-full bg-[var(--color-background)] border border-[#E2E8F0] flex items-center justify-center text-[10px] uppercase font-bold text-[var(--color-secondary-slate)]">{s.name.charAt(0)}</div>
                                                     <div className="text-xs font-medium">{s.name}</div>
                                                 </div>
-                                                {formData.students.includes(s._id) && <CheckCircle2 className="w-4 h-4 text-blue-500" />}
+                                                {formData.students.includes(s._id) && <CheckCircle2 className="w-4 h-4 text-[var(--color-tertiary-blue)]" />}
                                             </div>
                                         ))}
                                     </div>
@@ -382,7 +382,7 @@ const ClassManagement = () => {
                                 <button
                                     disabled={isPending}
                                     type="submit"
-                                    className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 text-white font-bold py-4 rounded-2xl transition-all shadow-lg shadow-blue-600/30 active:scale-[0.98] flex items-center justify-center gap-2"
+                                    className="w-full bg-[var(--color-primary-navy)] text-white hover:bg-[#020617] disabled:bg-blue-800 text-white font-bold py-4 rounded-2xl transition-all shadow-lg shadow-blue-600/30 active:scale-[0.98] flex items-center justify-center gap-2"
                                 >
                                     {isPending ? (
                                         <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />

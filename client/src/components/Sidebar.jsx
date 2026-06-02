@@ -20,18 +20,18 @@ const SidebarLink = ({ to, icon: Icon, label, end = false }) => (
         to={to}
         end={end}
         className={({ isActive }) => `
-      flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group
+      flex items-center gap-3 px-4 py-3 rounded-[var(--radius-default)] transition-all duration-200 group
       ${isActive
-                ? 'bg-blue-600/10 text-blue-400 shadow-[inset_0_0_20px_rgba(37,99,235,0.05)]'
-                : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'}
+                ? 'bg-[var(--color-tertiary-blue)]/10 text-[var(--color-tertiary-blue)] font-semibold'
+                : 'text-[var(--color-secondary-slate)] hover:bg-[#F1F5F9] hover:text-white'}
     `}
     >
         {({ isActive }) => (
             <>
                 <Icon className="w-5 h-5 transition-transform group-hover:scale-110" />
-                <span className="font-medium">{label}</span>
+                <span className={isActive ? 'font-semibold' : 'font-medium'}>{label}</span>
                 {isActive && (
-                    <div className="ml-auto w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.6)]" />
+                    <div className="ml-auto w-1.5 h-1.5 rounded-[var(--radius-full)] bg-[var(--color-tertiary-blue)]" />
                 )}
             </>
         )}
@@ -72,19 +72,19 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             {/* Mobile Overlay */}
             {isOpen && (
                 <div
-                    className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-40 lg:hidden"
+                    className="fixed inset-0 bg-[#0F172A]/60 backdrop-blur-sm z-40 lg:hidden"
                     onClick={toggleSidebar}
                 />
             )}
 
             <aside className={`
-        fixed inset-y-0 left-0 z-50 w-72 bg-slate-900 border-r border-slate-800 transition-transform duration-300 transform
+        fixed inset-y-0 left-0 z-50 w-72 bg-[var(--color-surface-default)] border-r border-[#E2E8F0] transition-transform duration-300 transform
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
         lg:translate-x-0 lg:static lg:inset-0
       `}>
-                <div className="h-16 flex items-center justify-between px-6 border-b border-slate-800 lg:hidden">
-                    <span className="text-xl font-bold text-white">DJ Portal</span>
-                    <button onClick={toggleSidebar} className="p-2 -mr-2 text-slate-400">
+                <div className="h-16 flex items-center justify-between px-6 border-b border-[#E2E8F0] lg:hidden">
+                    <span className="text-xl font-bold text-[var(--color-primary-navy)] font-headline">DJ Portal</span>
+                    <button onClick={toggleSidebar} className="p-2 -mr-2 text-[var(--color-secondary-slate)]">
                         <X className="w-6 h-6" />
                     </button>
                 </div>
@@ -92,15 +92,14 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 <div className="flex flex-col h-[calc(100%-4rem)] lg:h-full p-4">
                     <div className="mb-8 px-2 hidden lg:block">
                         <div className="flex items-center gap-3 mb-2">
-                            <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center">
-                                {/* <GraduationCap className="text-white w-6 h-6" /> */}
+                            <div className="w-10 h-10 rounded-[var(--radius-default)] bg-[var(--color-background)] border border-[#E2E8F0] flex items-center justify-center p-1">
                                 <img src="/dj-science-college-logo.png" alt="DJ Science College Logo" className="w-full h-full object-contain" />
                             </div>
-                            <h2 className="text-xl font-bold text-white">
+                            <h2 className="text-xl font-bold text-[var(--color-primary-navy)] font-headline tracking-tight">
                                 DJ SCIENCE
                             </h2>
                         </div>
-                        <p className="text-xs text-slate-500 font-medium px-1">COLLEGE PORTAL</p>
+                        <p className="text-xs text-[var(--color-secondary-slate)] font-medium px-1 tracking-wider uppercase">COLLEGE PORTAL</p>
                     </div>
 
                     <div className="space-y-1 overflow-y-auto flex-1 scrollbar-hide">
@@ -109,7 +108,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                         ))}
                     </div>
 
-                    <div className="mt-auto pt-6 border-t border-slate-800 space-y-1">
+                    <div className="mt-auto pt-6 border-t border-[#E2E8F0] space-y-1">
                         <SidebarLink to="/dashboard/profile" icon={UserCircle} label="Profile" />
                         <SidebarLink to="/dashboard/settings" icon={Settings} label="Settings" />
                     </div>
