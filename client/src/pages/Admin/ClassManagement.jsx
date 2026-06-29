@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../../services/api';
+import useAuthStore from '../../store/useAuthStore';
 import {
     Plus,
     BookOpen,
@@ -18,6 +19,10 @@ import { toast } from 'react-toastify';
 
 const ClassManagement = () => {
     const queryClient = useQueryClient();
+    const { user } = useAuthStore();
+    const isAdmin = user?.role === 'ADMIN';
+    const isTeacher = user?.role === 'TEACHER';
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingClass, setEditingClass] = useState(null);
     const [formData, setFormData] = useState({
@@ -29,12 +34,14 @@ const ClassManagement = () => {
     });
 
     // Fetch classes
-    const { data: classes, isLoading: isClassesLoading } = useQuery({
-        queryKey: ['classes'],
+    const { data: classes, isLoading: isClassesLoading, isError: isClassesError, error: classesError } = useQuery({
+        queryKey: ['classes', user?.role],
         queryFn: async () => {
-            const res = await api.get('/admin/classes');
+            const endpoint = isTeacher ? '/teacher/classes' : '/admin/classes';
+            const res = await api.get(endpoint);
             return res.data.data;
-        }
+        },
+        enabled: !!user
     });
 
     // Fetch teachers for dropdown
@@ -43,7 +50,8 @@ const ClassManagement = () => {
         queryFn: async () => {
             const res = await api.get('/admin/users?role=TEACHER');
             return res.data.data;
-        }
+        },
+        enabled: isAdmin
     });
 
     // Fetch all students for selection
@@ -52,7 +60,8 @@ const ClassManagement = () => {
         queryFn: async () => {
             const res = await api.get('/admin/users?role=STUDENT');
             return res.data.data;
-        }
+        },
+        enabled: isAdmin
     });
 
     const createClassMutation = useMutation({
@@ -163,17 +172,23 @@ const ClassManagement = () => {
                 <div>
                     <h1 className="text-2xl font-bold text-[var(--color-primary-navy)] flex items-center gap-2">
                         <BookOpen className="w-6 h-6 text-[var(--color-tertiary-blue)]" />
-                        Class Management
+                        {isTeacher ? 'My Classes' : 'Class Management'}
                     </h1>
-                    <p className="text-[var(--color-secondary-slate)] text-sm mt-1">Configure academic classes, schedules, and enrollments.</p>
+                    <p className="text-[var(--color-secondary-slate)] text-sm mt-1">
+                        {isTeacher
+                            ? 'View your assigned classes, schedules, and enrolled students.'
+                            : 'Configure academic classes, schedules, and enrollments.'}
+                    </p>
                 </div>
-                <button
-                    onClick={() => setIsModalOpen(true)}
-                    className="flex items-center gap-2 bg-[var(--color-primary-navy)] text-white hover:bg-[#020617] text-white px-5 py-2.5 rounded-xl font-semibold transition-all shadow-lg shadow-blue-600/20 active:scale-95"
-                >
-                    <Plus className="w-5 h-5" />
-                    Create New Class
-                </button>
+                {isAdmin && (
+                    <button
+                        onClick={() => setIsModalOpen(true)}
+                        className="flex items-center gap-2 bg-[var(--color-primary-navy)] text-white hover:bg-[#020617] text-white px-5 py-2.5 rounded-xl font-semibold transition-all shadow-lg shadow-blue-600/20 active:scale-95"
+                    >
+                        <Plus className="w-5 h-5" />
+                        Create New Class
+                    </button>
+                )}
             </div>
 
             {/* Classes Grid */}
@@ -181,9 +196,13 @@ const ClassManagement = () => {
                 <div className="flex justify-center py-20">
                     <div className="w-10 h-10 border-2 border-blue-500/20 border-t-blue-500 rounded-full animate-spin" />
                 </div>
+            ) : isClassesError ? (
+                <div className="bg-red-500/10 text-red-500 border border-red-500/20 rounded-3xl p-8 text-center">
+                    Failed to load classes: {classesError?.response?.data?.message || classesError?.message || 'Unknown error'}
+                </div>
             ) : classes?.length === 0 ? (
                 <div className="bg-[var(--color-surface-default)] shadow-sm border border-[#E2E8F0] rounded-3xl p-12 text-center text-[var(--color-secondary-slate)]">
-                    No classes found. Start by creating a new class.
+                    No classes found. {isAdmin && "Start by creating a new class."}
                 </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -221,20 +240,22 @@ const ClassManagement = () => {
                                     </div>
                                     <span className="text-xs font-medium text-[var(--color-secondary-slate)]">{cls.teacher?.name}</span>
                                 </div>
-                                <div className="flex items-center gap-1">
-                                    <button
-                                        onClick={() => openEditModal(cls)}
-                                        className="text-[var(--color-secondary-slate)] hover:text-[var(--color-tertiary-blue)] transition-colors p-1.5 hover:bg-blue-500/10 rounded-lg"
-                                    >
-                                        <Edit3 className="w-4 h-4" />
-                                    </button>
-                                    <button
-                                        onClick={() => handleDelete(cls)}
-                                        className="text-[var(--color-secondary-slate)] hover:text-red-400 transition-colors p-1.5 hover:bg-red-500/10 rounded-lg"
-                                    >
-                                        <Trash2 className="w-4 h-4" />
-                                    </button>
-                                </div>
+                                {isAdmin && (
+                                    <div className="flex items-center gap-1">
+                                        <button
+                                            onClick={() => openEditModal(cls)}
+                                            className="text-[var(--color-secondary-slate)] hover:text-[var(--color-tertiary-blue)] transition-colors p-1.5 hover:bg-blue-500/10 rounded-lg"
+                                        >
+                                            <Edit3 className="w-4 h-4" />
+                                        </button>
+                                        <button
+                                            onClick={() => handleDelete(cls)}
+                                            className="text-[var(--color-secondary-slate)] hover:text-red-400 transition-colors p-1.5 hover:bg-red-500/10 rounded-lg"
+                                        >
+                                            <Trash2 className="w-4 h-4" />
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     ))}

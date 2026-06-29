@@ -7,7 +7,9 @@ import Attendance from '../models/Attendance.js';
 // @access  Private/Teacher
 export const getAssignedClasses = async (req, res, next) => {
     try {
-        const classes = await Class.find({ teacher: req.user.id });
+        const classes = await Class.find({ teacher: req.user.id })
+            .populate('teacher', 'name email department')
+            .populate('students', 'name email');
         res.status(200).json({ success: true, count: classes.length, data: classes });
     } catch (err) {
         next(err);
